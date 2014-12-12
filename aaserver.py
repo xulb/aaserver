@@ -2,7 +2,7 @@ import rcon
 from dmflags import *
 import asyncio
 import re
-from argparse import ArgumentParser
+import sys
 
 class AAServer(rcon.RconClientProtocol):
     def __init__(self, address, passwd):
@@ -114,12 +114,8 @@ def q2strip(s):
     return ret
                 
 if __name__ == '__main__':
-    parser = ArgumentParser(description="command line for testing")
-    parser.add_argument('host')
-    parser.add_argument('port')
-    parser.add_argument('passwd')
-    args = parser.parse_args()
-    svr = AAServer((args.host,args.port),passwd)
+    args = dict(['host','port','passwd'],sys.argv[-3:])
+    svr = AAServer((args['host'],args['port']),args['passwd'])
     resp = svr.do_rcon_cmd('sv_botkickthreshold')
     svr.kick('[OS]Xulb');
     1
