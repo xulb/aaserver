@@ -40,6 +40,8 @@ class RconClientProtocolTest(unittest.TestCase):
         self.rcp.connect()
         self.assertTrue(re.match('\"sv_botkickthreshold\" is',
                                  self.rcp.do_rcon_cmd('sv_botkickthreshold')))
+        self.assertTrue(re.match('map\s+:',
+                                 self.rcp.do_rcon_cmd('status')))
     def testRcpTimeout(self):
         self.bad_rcp.connect()
         with self.assertRaises(Exception):

@@ -1,7 +1,7 @@
 import asyncio
 import collections
 import re
-from argparse import ArgumentParser
+import sys
 
 class RconCommand():
     """Class to convert an rcon command and password to QuakeII protocol
@@ -136,13 +136,9 @@ class RconClientProtocol(asyncio.Protocol):
         self.loop.close()
 
 if __name__ == '__main__':    
-    parser = ArgumentParser(description="command line for testing")
-    parser.add_argument('host')
-    parser.add_argument('port')
-    parser.add_argument('passwd')
-    args = parser.parse_args()
-    address = (args.host,args.port)
-    pw = args.passwd
+    args = dict(['host','port','passwd'],sys.argv[-3:])
+    address = (args['host'],args['port'])
+    pw = args['passwd']
     loop = asyncio.get_event_loop()
     pr = RconClientProtocol(loop,address,pw)
     pr.connect()
