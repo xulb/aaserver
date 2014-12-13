@@ -1,0 +1,15 @@
+import os
+import tkinter as tk
+import pygubu
+
+class AlienApp(pygubu.TkApplication):
+    def _create_ui(self):
+        self.builder = builder = pygubu.Builder()
+        builder.add_from_file('aaserver.ui')
+        self.mainwindow = builder.get_object('aaserver_nbk',self.master)
+        self.set_title('AA Server')
+
+if __name__ == '__main__':
+    root = tk.Tk()
+    app = AlienApp(root)
+    app.run()
