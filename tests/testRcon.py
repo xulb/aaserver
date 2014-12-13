@@ -1,5 +1,5 @@
 import unittest
-import rcon
+import model.rcon as rcon
 import asyncio
 import re
 import sys

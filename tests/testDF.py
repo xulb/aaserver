@@ -1,5 +1,5 @@
 import unittest
-from dmflags import *
+from model.dmflags import *
 
 class DMFlagsTest(unittest.TestCase):
     def testDMFlagsObject(self):
