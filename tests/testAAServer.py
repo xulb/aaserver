@@ -2,8 +2,8 @@
 #sys.path.append('..')
 import unittest
 from unittest.mock import MagicMock
-import aaserver
-import rcon
+import model.aaserver as aaserver
+import model.rcon as rcon
 from testArgs import testArgs
 
 args = testArgs()
