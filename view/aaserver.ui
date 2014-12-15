@@ -48,7 +48,6 @@
             </child>
             <child>
               <object class="tk.Message" id="msg_mapname">
-                <property name="text" translatable="yes">Message_3</property>
                 <property name="textvariable">string:current_map</property>
                 <property name="width">150</property>
                 <layout>
@@ -87,7 +86,7 @@
                 <layout>
                   <property name="column">0</property>
                   <property name="propagate">True</property>
-                  <property name="row">1</property>
+                  <property name="row">0</property>
                   <property name="sticky">w</property>
                 </layout>
               </object>
@@ -98,14 +97,13 @@
                 <layout>
                   <property name="column">0</property>
                   <property name="propagate">True</property>
-                  <property name="row">0</property>
+                  <property name="row">1</property>
                   <property name="sticky">w</property>
                 </layout>
               </object>
             </child>
             <child>
               <object class="tk.Message" id="msg_servername">
-                <property name="text" translatable="yes">Message_5</property>
                 <property name="textvariable">string:server_name</property>
                 <property name="width">150</property>
                 <layout>
@@ -118,7 +116,6 @@
             </child>
             <child>
               <object class="tk.Message" id="msg_svraddr">
-                <property name="text" translatable="yes">Message_6</property>
                 <property name="textvariable">string:svr_addr</property>
                 <property name="width">150</property>
                 <layout>
@@ -181,6 +178,83 @@
             </layout>
           </object>
         </child>
+      </object>
+    </child>
+  </object>
+  <object class="tk.Menu" id="menu_main">
+    <property name="tearoff">true</property>
+    <child>
+      <object class="tk.Menuitem.Command" id="menu_item_server">
+        <property name="command">on_menu_item_server_click</property>
+        <property name="command_id_arg">false</property>
+        <property name="font">TkDefaultFont</property>
+        <property name="label" translatable="yes">Server</property>
+        <property name="state">normal</property>
+      </object>
+    </child>
+  </object>
+  <object class="pygubu.builder.widgets.dialog" id="dialog_open_server">
+    <property name="height">100</property>
+    <property name="modal">true</property>
+    <property name="padx">25</property>
+    <property name="pady">15</property>
+    <property name="resizable">none</property>
+    <property name="takefocus">true</property>
+    <property name="title" translatable="yes">Open Server</property>
+    <property name="width">200</property>
+    <child>
+      <object class="ttk.Label" id="Label_5">
+        <property name="text" translatable="yes">Address:</property>
+        <layout>
+          <property name="column">0</property>
+          <property name="propagate">True</property>
+          <property name="row">0</property>
+        </layout>
+      </object>
+    </child>
+    <child>
+      <object class="ttk.Entry" id="open_svr_addr">
+        <property name="textvariable">string:open_svr_addr</property>
+        <layout>
+          <property name="column">1</property>
+          <property name="propagate">True</property>
+          <property name="row">0</property>
+        </layout>
+      </object>
+    </child>
+    <child>
+      <object class="ttk.Label" id="Label_7">
+        <property name="text" translatable="yes">Rcon pass:</property>
+        <layout>
+          <property name="column">0</property>
+          <property name="propagate">True</property>
+          <property name="row">1</property>
+        </layout>
+      </object>
+    </child>
+    <child>
+      <object class="ttk.Entry" id="open_svr_pass">
+        <property name="textvariable">string:open_svr_pass</property>
+        <layout>
+          <property name="column">1</property>
+          <property name="propagate">True</property>
+          <property name="row">1</property>
+        </layout>
+      </object>
+    </child>
+    <child>
+      <object class="ttk.Button" id="btn_connect">
+        <property name="command">on_svr_dlg_connect_click</property>
+        <property name="default">normal</property> 
+        <property name="state">normal</property>
+        <property name="text" translatable="yes">Connect</property>
+        <layout>
+          <property name="column">0</property>
+          <property name="columnspan">2</property>
+          <property name="pady">10</property>
+          <property name="propagate">True</property>
+          <property name="row">2</property>
+        </layout>
       </object>
     </child>
   </object>
