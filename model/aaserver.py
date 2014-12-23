@@ -24,6 +24,12 @@ class AAServer(rcon.RconClientProtocol):
     @property
     def dmflags(self):
         return DMFlags(self.cvar('dmflags'))
+    @property
+    def name(self):
+        return q2strip(self.cvar('hostname').split()[1])
+    @property
+    def admin(self):
+        return q2strip(self.cvar('admin').split()[1])
 
     def cvar(self,cvar,value=None):
         if value or value == 0:
