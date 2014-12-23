@@ -9,10 +9,17 @@ class ServerController:
         self.address = address
         self.passwd = passwd
         self.server = AAServer(address, passwd)
+        self.name = self.server.name
+        self.admin = self.server.admin
+
     def set_server_from_dialog(self):
         addr = tuple(
             self.app.builder.get_variable('open_svr_addr').get().split(':'))
         passwd =self.app.builder.get_variable('open_svr_pass').get()
         self._set_server_and_connect(addr,passwd)
 
+
+#msg_servername
+#msg_svraddr
+#msg_mapname
         
