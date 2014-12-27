@@ -327,7 +327,9 @@
             </layout>
             <child>
               <object class="ttk.Checkbutton" id="chk_nopwr">
+                <property name="onvalue">NO_ITEMS</property>
                 <property name="text" translatable="yes">no powerups</property>
+                <property name="variable">string:f_nopwr</property>
                 <layout>
                   <property name="column">0</property>
                   <property name="propagate">True</property>
@@ -338,7 +340,9 @@
             </child>
             <child>
               <object class="ttk.Checkbutton" id="chk_instant">
+                <property name="onvalue">INSTANT_ITEMS</property>
                 <property name="text" translatable="yes">instant powerups</property>
+                <property name="variable">string:f_instant</property>
                 <layout>
                   <property name="column">0</property>
                   <property name="propagate">True</property>
@@ -349,7 +353,9 @@
             </child>
             <child>
               <object class="ttk.Checkbutton" id="chk_quaddrop">
+                <property name="onvalue">QUAD_DROP</property>
                 <property name="text" translatable="yes">quad drop</property>
+                <property name="variable">string:f_quaddrop</property>
                 <layout>
                   <property name="column">0</property>
                   <property name="propagate">True</property>
@@ -360,7 +366,9 @@
             </child>
             <child>
               <object class="ttk.Checkbutton" id="chk_nohealth">
+                <property name="onvalue">NO_HEALTH</property>
                 <property name="text" translatable="yes">no health</property>
+                <property name="variable">string:f_nohealth</property>
                 <layout>
                   <property name="column">0</property>
                   <property name="propagate">True</property>
@@ -371,7 +379,9 @@
             </child>
             <child>
               <object class="ttk.Checkbutton" id="chk_weapstay">
+                <property name="onvalue">WEAPONS_STAY</property>
                 <property name="text" translatable="yes">weapons stay</property>
+                <property name="variable">string:f_weapstay</property>
                 <layout>
                   <property name="column">0</property>
                   <property name="propagate">True</property>
@@ -382,7 +392,9 @@
             </child>
             <child>
               <object class="ttk.Checkbutton" id="chk_infammo">
+                <property name="onvalue">INFINITE_AMMO</property>
                 <property name="text" translatable="yes">infinite ammo</property>
+                <property name="variable">string:f_infammo</property>
                 <layout>
                   <property name="column">0</property>
                   <property name="propagate">True</property>
@@ -393,7 +405,9 @@
             </child>
             <child>
               <object class="ttk.Checkbutton" id="chk_noarmor">
+                <property name="onvalue">NO_ARMOR</property>
                 <property name="text" translatable="yes">no armor</property>
+                <property name="variable">string:f_noarmor</property>
                 <layout>
                   <property name="column">0</property>
                   <property name="propagate">True</property>
@@ -417,7 +431,9 @@
             </layout>
             <child>
               <object class="ttk.Checkbutton" id="chk_samemap">
+                <property name="onvalue">SAME_LEVEL</property>
                 <property name="text" translatable="yes">same map</property>
+                <property name="variable">string:f_samemap</property>
                 <layout>
                   <property name="column">0</property>
                   <property name="propagate">True</property>
@@ -428,7 +444,9 @@
             </child>
             <child>
               <object class="ttk.Checkbutton" id="chk_allowexit">
+                <property name="onvalue">ALLOW_EXIT</property>
                 <property name="text" translatable="yes">allow exit</property>
+                <property name="variable">string:f_allowexit</property>
                 <layout>
                   <property name="column">0</property>
                   <property name="propagate">True</property>
@@ -452,7 +470,9 @@
             </layout>
             <child>
               <object class="ttk.Checkbutton" id="chk_fixfov">
+                <property name="onvalue">FIXED_FOV</property>
                 <property name="text" translatable="yes">fixed FOV</property>
+                <property name="variable">string:f_fixfov</property>
                 <layout>
                   <property name="column">0</property>
                   <property name="propagate">True</property>
@@ -488,7 +508,9 @@
             </layout>
             <child>
               <object class="ttk.Checkbutton" id="chk_noffire">
+                <property name="onvalue">NO_FRIENDLY_FIRE</property>
                 <property name="text" translatable="yes">no friendly fire</property>
+                <property name="variable">string:f_noffire</property>
                 <layout>
                   <property name="column">0</property>
                   <property name="propagate">True</property>
@@ -499,7 +521,9 @@
             </child>
             <child>
               <object class="ttk.Checkbutton" id="chk_teamsmodel">
+                <property name="onvalue">MODELTEAMS</property>
                 <property name="text" translatable="yes">teams by model</property>
+                <property name="variable">string:f_teamsmodel</property>
                 <layout>
                   <property name="column">0</property>
                   <property name="propagate">True</property>
@@ -510,7 +534,9 @@
             </child>
             <child>
               <object class="ttk.Checkbutton" id="chk_teamsskin">
+                <property name="onvalue">SKINTEAMS</property>
                 <property name="text" translatable="yes">teams by skin</property>
+                <property name="variable">string:f_teamskin</property>
                 <layout>
                   <property name="column">0</property>
                   <property name="propagate">True</property>
@@ -652,6 +678,7 @@
         </layout>
         <child>
           <object class="ttk.Button" id="btn_dmflags">
+            <property name="command">on_dmflags_click</property>
             <property name="text" translatable="yes">Update flags</property>
             <layout>
               <property name="column">0</property>
