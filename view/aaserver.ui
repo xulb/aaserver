@@ -12,150 +12,194 @@
       <object class="ttk.Notebook.Tab" id="svr_tab">
         <property name="text" translatable="yes">Server</property>
         <child>
-          <object class="ttk.Labelframe" id="svr_frame">
+          <object class="ttk.Frame" id="svr_tab_frame">
             <property name="height">200</property>
-            <property name="text" translatable="yes">Labelframe_2</property>
-            <property name="width">200</property>
+            <property name="width">400</property>
             <layout>
               <property name="column">0</property>
               <property name="propagate">True</property>
               <property name="row">0</property>
-              <columns>
-                <column id="0">
-                  <property name="minsize">86</property>
-                </column>
-              </columns>
             </layout>
             <child>
-              <object class="ttk.Combobox" id="Combobox_1">
-                <layout>
-                  <property name="column">1</property>
-                  <property name="propagate">True</property>
-                  <property name="row">3</property>
-                </layout>
-              </object>
-            </child>
-            <child>
-              <object class="ttk.Button" id="btn_map_submit">
-                <property name="text" translatable="yes">Start map</property>
-                <layout>
-                  <property name="column">2</property>
-                  <property name="padx">20</property>
-                  <property name="propagate">True</property>
-                  <property name="row">3</property>
-                </layout>
-              </object>
-            </child>
-            <child>
-              <object class="tk.Message" id="msg_mapname">
-                <property name="textvariable">string:current_map</property>
-                <property name="width">150</property>
-                <layout>
-                  <property name="column">1</property>
-                  <property name="propagate">True</property>
-                  <property name="row">2</property>
-                  <property name="sticky">w</property>
-                </layout>
-              </object>
-            </child>
-            <child>
-              <object class="ttk.Label" id="Label_1">
-                <property name="text" translatable="yes">Current map:</property>
+              <object class="ttk.Labelframe" id="svr_frame">
+                <property name="height">100</property>
+                <property name="text" translatable="yes">Current</property>
+                <property name="width">400</property>
                 <layout>
                   <property name="column">0</property>
-                  <property name="propagate">True</property>
-                  <property name="row">2</property>
-                  <property name="sticky">w</property>
-                </layout>
-              </object>
-            </child>
-            <child>
-              <object class="ttk.Label" id="Label_2">
-                <property name="text" translatable="yes">New map:</property>
-                <layout>
-                  <property name="column">0</property>
-                  <property name="propagate">True</property>
-                  <property name="row">3</property>
-                  <property name="sticky">w</property>
-                </layout>
-              </object>
-            </child>
-            <child>
-              <object class="ttk.Label" id="Label_3">
-                <property name="text" translatable="yes">Server:</property>
-                <layout>
-                  <property name="column">0</property>
-                  <property name="propagate">True</property>
+                  <property name="propagate">False</property>
                   <property name="row">0</property>
-                  <property name="sticky">w</property>
+                  <columns>
+                    <column id="0">
+                      <property name="minsize">90</property>
+                    </column>
+                  </columns>
                 </layout>
+                <child>
+                  <object class="tk.Message" id="msg_mapname">
+                    <property name="text" translatable="yes">                      </property>
+                    <property name="textvariable">string:current_map</property>
+                    <property name="width">300</property>
+                    <layout>
+                      <property name="column">1</property>
+                      <property name="columnspan">1</property>
+                      <property name="propagate">True</property>
+                      <property name="row">2</property>
+                      <property name="sticky">w</property>
+                    </layout>
+                  </object>
+                </child>
+                <child>
+                  <object class="ttk.Label" id="lbl_curmap">
+                    <property name="text" translatable="yes">Current map:</property>
+                    <layout>
+                      <property name="column">0</property>
+                      <property name="propagate">True</property>
+                      <property name="row">2</property>
+                      <property name="sticky">w</property>
+                    </layout>
+                  </object>
+                </child>
+                <child>
+                  <object class="ttk.Label" id="lbl_addr">
+                    <property name="text" translatable="yes">Address:</property>
+                    <layout>
+                      <property name="column">0</property>
+                      <property name="propagate">True</property>
+                      <property name="row">1</property>
+                      <property name="sticky">w</property>
+                    </layout>
+                  </object>
+                </child>
+                <child>
+                  <object class="ttk.Label" id="lbl_svr">
+                    <property name="text" translatable="yes">Server:</property>
+                    <layout>
+                      <property name="column">0</property>
+                      <property name="propagate">True</property>
+                      <property name="row">0</property>
+                      <property name="sticky">w</property>
+                    </layout>
+                  </object>
+                </child>
+                <child>
+                  <object class="tk.Message" id="msg_servername">
+                    <property name="textvariable">string:server_name</property>
+                    <property name="width">250</property>
+                    <layout>
+                      <property name="column">1</property>
+                      <property name="propagate">True</property>
+                      <property name="row">1</property>
+                      <property name="sticky">w</property>
+                    </layout>
+                  </object>
+                </child>
+                <child>
+                  <object class="tk.Message" id="msg_svraddr">
+                    <property name="textvariable">string:svr_addr</property>
+                    <property name="width">150</property>
+                    <layout>
+                      <property name="column">1</property>
+                      <property name="propagate">True</property>
+                      <property name="row">0</property>
+                      <property name="sticky">w</property>
+                    </layout>
+                  </object>
+                </child>
+                <child>
+                  <object class="ttk.Button" id="btn_refresh">
+                    <property name="command">on_refresh_click</property>
+                    <property name="text" translatable="yes">Refresh</property>
+                    <layout>
+                      <property name="column">2</property>
+                      <property name="propagate">True</property>
+                      <property name="row">2</property>
+                      <property name="sticky">ne</property>
+                    </layout>
+                  </object>
+                </child>
               </object>
             </child>
             <child>
-              <object class="ttk.Label" id="Label_4">
-                <property name="text" translatable="yes">Address:</property>
+              <object class="ttk.Labelframe" id="cntl_frame">
+                <property name="height">100</property>
+                <property name="text" translatable="yes">Controls</property>
+                <property name="width">400</property>
                 <layout>
                   <property name="column">0</property>
-                  <property name="propagate">True</property>
+                  <property name="propagate">False</property>
                   <property name="row">1</property>
-                  <property name="sticky">w</property>
+                  <columns>
+                    <column id="0">
+                      <property name="minsize">42</property>
+                    </column>
+                  </columns>
                 </layout>
-              </object>
-            </child>
-            <child>
-              <object class="tk.Message" id="msg_servername">
-                <property name="textvariable">string:server_name</property>
-                <property name="width">150</property>
-                <layout>
-                  <property name="column">1</property>
-                  <property name="propagate">True</property>
-                  <property name="row">1</property>
-                  <property name="sticky">w</property>
-                </layout>
-              </object>
-            </child>
-            <child>
-              <object class="tk.Message" id="msg_svraddr">
-                <property name="textvariable">string:svr_addr</property>
-                <property name="width">150</property>
-                <layout>
-                  <property name="column">1</property>
-                  <property name="propagate">True</property>
-                  <property name="row">0</property>
-                  <property name="sticky">w</property>
-                </layout>
-              </object>
-            </child>
-            <child>
-              <object class="ttk.Label" id="Label_6">
-                <property name="text" translatable="yes">Command</property>
-                <layout>
-                  <property name="column">0</property>
-                  <property name="propagate">True</property>
-                  <property name="row">5</property>
-                </layout>
-              </object>
-            </child>
-            <child>
-              <object class="ttk.Entry" id="txt_rcon_cmd">
-                <property name="text" translatable="yes">Entry_1</property>
-                <property name="textvariable">string:rcon_cmd</property>
-                <layout>
-                  <property name="column">1</property>
-                  <property name="propagate">True</property>
-                  <property name="row">5</property>
-                  <property name="sticky">w</property>
-                </layout>
-              </object>
-            </child>
-            <child>
-              <object class="ttk.Button" id="btn_send_cmd">
-                <property name="text" translatable="yes">Send</property>
-                <layout>
-                  <property name="column">2</property>
-                  <property name="propagate">True</property>
-                  <property name="row">5</property>
-                </layout>
+                <child>
+                  <object class="ttk.Entry" id="txt_rcon_cmd">
+                    <property name="textvariable">string:rcon_cmd</property>
+                    <layout>
+                      <property name="column">1</property>
+                      <property name="propagate">True</property>
+                      <property name="row">5</property>
+                      <property name="sticky">w</property>
+                    </layout>
+                  </object>
+                </child>
+                <child>
+                  <object class="ttk.Button" id="btn_start_map">
+                    <property name="command">on_start_map_click</property>
+                    <property name="text" translatable="yes">Start map</property>
+                    <layout>
+                      <property name="column">2</property>
+                      <property name="padx">20</property>
+                      <property name="propagate">True</property>
+                      <property name="row">3</property>
+                    </layout>
+                  </object>
+                </child>
+                <child>
+                  <object class="ttk.Combobox" id="cmb_maps">
+                    <property name="textvariable">string:selected_map</property>
+                    <layout>
+                      <property name="column">1</property>
+                      <property name="propagate">True</property>
+                      <property name="row">3</property>
+                    </layout>
+                  </object>
+                </child>
+                <child>
+                  <object class="ttk.Label" id="lbl_newmap">
+                    <property name="text" translatable="yes">New map:</property>
+                    <layout>
+                      <property name="column">0</property>
+                      <property name="propagate">True</property>
+                      <property name="row">3</property>
+                      <property name="sticky">w</property>
+                    </layout>
+                  </object>
+                </child>
+                <child>
+                  <object class="ttk.Button" id="btn_send_cmd">
+                    <property name="command">on_send_cmd_click</property>
+                    <property name="text" translatable="yes">Send</property>
+                    <layout>
+                      <property name="column">2</property>
+                      <property name="propagate">True</property>
+                      <property name="row">5</property>
+                    </layout>
+                  </object>
+                </child>
+                <child>
+                  <object class="ttk.Label" id="lbl_cmd">
+                    <property name="text" translatable="yes">Command</property>
+                    <layout>
+                      <property name="column">0</property>
+                      <property name="propagate">True</property>
+                      <property name="row">5</property>
+                    </layout>
+                  </object>
+                </child>
               </object>
             </child>
           </object>
@@ -165,11 +209,9 @@
     <child>
       <object class="ttk.Notebook.Tab" id="plyr_tab">
         <property name="text" translatable="yes">Players</property>
-        <property name="underline">0</property>
         <child>
-          <object class="ttk.Labelframe" id="plyr_frame">
+          <object class="ttk.Frame" id="plyr_tab_frame">
             <property name="height">200</property>
-            <property name="text" translatable="yes">Labelframe_3</property>
             <property name="width">200</property>
             <layout>
               <property name="column">0</property>
@@ -203,7 +245,7 @@
     <property name="title" translatable="yes">Open Server</property>
     <property name="width">200</property>
     <child>
-      <object class="ttk.Label" id="Label_5">
+      <object class="ttk.Label" id="lbl_svr_addr">
         <property name="text" translatable="yes">Address:</property>
         <layout>
           <property name="column">0</property>
@@ -223,7 +265,7 @@
       </object>
     </child>
     <child>
-      <object class="ttk.Label" id="Label_7">
+      <object class="ttk.Label" id="lbl_svr_pass">
         <property name="text" translatable="yes">Rcon pass:</property>
         <layout>
           <property name="column">0</property>
@@ -245,7 +287,7 @@
     <child>
       <object class="ttk.Button" id="btn_connect">
         <property name="command">on_svr_dlg_connect_click</property>
-        <property name="default">normal</property> 
+        <property name="default">normal</property>
         <property name="state">normal</property>
         <property name="text" translatable="yes">Connect</property>
         <layout>
@@ -255,6 +297,370 @@
           <property name="propagate">True</property>
           <property name="row">2</property>
         </layout>
+      </object>
+    </child>
+  </object>
+  <object class="pygubu.builder.widgets.dialog" id="dialog_dmflags">
+    <property name="height">100</property>
+    <property name="modal">false</property>
+    <property name="width">300</property>
+    <child>
+      <object class="ttk.Frame" id="Frame_1">
+        <property name="height">200</property>
+        <property name="width">200</property>
+        <layout>
+          <property name="column">0</property>
+          <property name="propagate">True</property>
+          <property name="row">0</property>
+          <property name="sticky">nw</property>
+        </layout>
+        <child>
+          <object class="ttk.Labelframe" id="pu_frame">
+            <property name="height">160</property>
+            <property name="text" translatable="yes">Pick-ups</property>
+            <property name="width">150</property>
+            <layout>
+              <property name="column">0</property>
+              <property name="propagate">False</property>
+              <property name="row">0</property>
+              <property name="sticky">nw</property>
+            </layout>
+            <child>
+              <object class="ttk.Checkbutton" id="chk_nopwr">
+                <property name="text" translatable="yes">no powerups</property>
+                <layout>
+                  <property name="column">0</property>
+                  <property name="propagate">True</property>
+                  <property name="row">0</property>
+                  <property name="sticky">nw</property>
+                </layout>
+              </object>
+            </child>
+            <child>
+              <object class="ttk.Checkbutton" id="chk_instant">
+                <property name="text" translatable="yes">instant powerups</property>
+                <layout>
+                  <property name="column">0</property>
+                  <property name="propagate">True</property>
+                  <property name="row">1</property>
+                  <property name="sticky">nw</property>
+                </layout>
+              </object>
+            </child>
+            <child>
+              <object class="ttk.Checkbutton" id="chk_quaddrop">
+                <property name="text" translatable="yes">quad drop</property>
+                <layout>
+                  <property name="column">0</property>
+                  <property name="propagate">True</property>
+                  <property name="row">2</property>
+                  <property name="sticky">nw</property>
+                </layout>
+              </object>
+            </child>
+            <child>
+              <object class="ttk.Checkbutton" id="chk_nohealth">
+                <property name="text" translatable="yes">no health</property>
+                <layout>
+                  <property name="column">0</property>
+                  <property name="propagate">True</property>
+                  <property name="row">3</property>
+                  <property name="sticky">nw</property>
+                </layout>
+              </object>
+            </child>
+            <child>
+              <object class="ttk.Checkbutton" id="chk_weapstay">
+                <property name="text" translatable="yes">weapons stay</property>
+                <layout>
+                  <property name="column">0</property>
+                  <property name="propagate">True</property>
+                  <property name="row">4</property>
+                  <property name="sticky">nw</property>
+                </layout>
+              </object>
+            </child>
+            <child>
+              <object class="ttk.Checkbutton" id="chk_infammo">
+                <property name="text" translatable="yes">infinite ammo</property>
+                <layout>
+                  <property name="column">0</property>
+                  <property name="propagate">True</property>
+                  <property name="row">5</property>
+                  <property name="sticky">nw</property>
+                </layout>
+              </object>
+            </child>
+            <child>
+              <object class="ttk.Checkbutton" id="chk_noarmor">
+                <property name="text" translatable="yes">no armor</property>
+                <layout>
+                  <property name="column">0</property>
+                  <property name="propagate">True</property>
+                  <property name="row">6</property>
+                  <property name="sticky">nw</property>
+                </layout>
+              </object>
+            </child>
+          </object>
+        </child>
+        <child>
+          <object class="ttk.Labelframe" id="endg_frame">
+            <property name="height">65</property>
+            <property name="text" translatable="yes">End-Game</property>
+            <property name="width">150</property>
+            <layout>
+              <property name="column">0</property>
+              <property name="propagate">False</property>
+              <property name="row">1</property>
+              <property name="sticky">nw</property>
+            </layout>
+            <child>
+              <object class="ttk.Checkbutton" id="chk_samemap">
+                <property name="text" translatable="yes">same map</property>
+                <layout>
+                  <property name="column">0</property>
+                  <property name="propagate">True</property>
+                  <property name="row">0</property>
+                  <property name="sticky">nw</property>
+                </layout>
+              </object>
+            </child>
+            <child>
+              <object class="ttk.Checkbutton" id="chk_allowexit">
+                <property name="text" translatable="yes">allow exit</property>
+                <layout>
+                  <property name="column">0</property>
+                  <property name="propagate">True</property>
+                  <property name="row">1</property>
+                  <property name="sticky">nw</property>
+                </layout>
+              </object>
+            </child>
+          </object>
+        </child>
+        <child>
+          <object class="ttk.Labelframe" id="others_frame">
+            <property name="height">40</property>
+            <property name="text" translatable="yes">Other</property>
+            <property name="width">150</property>
+            <layout>
+              <property name="column">0</property>
+              <property name="propagate">False</property>
+              <property name="row">2</property>
+              <property name="sticky">nw</property>
+            </layout>
+            <child>
+              <object class="ttk.Checkbutton" id="chk_fixfov">
+                <property name="text" translatable="yes">fixed FOV</property>
+                <layout>
+                  <property name="column">0</property>
+                  <property name="propagate">True</property>
+                  <property name="row">0</property>
+                  <property name="sticky">nw</property>
+                </layout>
+              </object>
+            </child>
+          </object>
+        </child>
+      </object>
+    </child>
+    <child>
+      <object class="ttk.Frame" id="Frame_2">
+        <property name="height">200</property>
+        <property name="width">200</property>
+        <layout>
+          <property name="column">1</property>
+          <property name="propagate">True</property>
+          <property name="row">0</property>
+          <property name="sticky">nw</property>
+        </layout>
+        <child>
+          <object class="ttk.Labelframe" id="teams_frame">
+            <property name="height">80</property>
+            <property name="text" translatable="yes">Teams</property>
+            <property name="width">150</property>
+            <layout>
+              <property name="column">1</property>
+              <property name="propagate">False</property>
+              <property name="row">0</property>
+              <property name="sticky">nw</property>
+            </layout>
+            <child>
+              <object class="ttk.Checkbutton" id="chk_noffire">
+                <property name="text" translatable="yes">no friendly fire</property>
+                <layout>
+                  <property name="column">0</property>
+                  <property name="propagate">True</property>
+                  <property name="row">0</property>
+                  <property name="sticky">nw</property>
+                </layout>
+              </object>
+            </child>
+            <child>
+              <object class="ttk.Checkbutton" id="chk_teamsmodel">
+                <property name="text" translatable="yes">teams by model</property>
+                <layout>
+                  <property name="column">0</property>
+                  <property name="propagate">True</property>
+                  <property name="row">1</property>
+                  <property name="sticky">nw</property>
+                </layout>
+              </object>
+            </child>
+            <child>
+              <object class="ttk.Checkbutton" id="chk_teamsskin">
+                <property name="text" translatable="yes">teams by skin</property>
+                <layout>
+                  <property name="column">0</property>
+                  <property name="propagate">True</property>
+                  <property name="row">2</property>
+                  <property name="sticky">nw</property>
+                </layout>
+              </object>
+            </child>
+          </object>
+        </child>
+        <child>
+          <object class="ttk.Labelframe" id="bots_frame">
+            <property name="height">120</property>
+            <property name="takefocus">false</property>
+            <property name="text" translatable="yes">Bot Control</property>
+            <property name="width">150</property>
+            <layout>
+              <property name="column">1</property>
+              <property name="propagate">False</property>
+              <property name="row">1</property>
+              <property name="sticky">nw</property>
+            </layout>
+            <child>
+              <object class="ttk.Checkbutton" id="chk_nobots">
+                <property name="text" translatable="yes">disable bots</property>
+                <layout>
+                  <property name="column">0</property>
+                  <property name="propagate">True</property>
+                  <property name="row">0</property>
+                  <property name="sticky">nw</property>
+                </layout>
+              </object>
+            </child>
+            <child>
+              <object class="ttk.Checkbutton" id="chk_botaim">
+                <property name="text" translatable="yes">bot perfect aim</property>
+                <layout>
+                  <property name="column">0</property>
+                  <property name="propagate">True</property>
+                  <property name="row">1</property>
+                  <property name="sticky">nw</property>
+                </layout>
+              </object>
+            </child>
+            <child>
+              <object class="ttk.Checkbutton" id="chk_nobotchat">
+                <property name="text" translatable="yes">disable bot chat</property>
+                <layout>
+                  <property name="column">0</property>
+                  <property name="propagate">True</property>
+                  <property name="row">2</property>
+                  <property name="sticky">nw</property>
+                </layout>
+              </object>
+            </child>
+            <child>
+              <object class="ttk.Checkbutton" id="chk_botautonode">
+                <property name="text" translatable="yes">bot autosave nodes</property>
+                <layout>
+                  <property name="column">0</property>
+                  <property name="propagate">True</property>
+                  <property name="row">3</property>
+                  <property name="sticky">nw</property>
+                </layout>
+              </object>
+            </child>
+            <child>
+              <object class="ttk.Checkbutton" id="chk_alwaysadv">
+                <property name="text" translatable="yes">always advance level</property>
+                <layout>
+                  <property name="column">0</property>
+                  <property name="propagate">True</property>
+                  <property name="row">4</property>
+                  <property name="sticky">nw</property>
+                </layout>
+              </object>
+            </child>
+          </object>
+        </child>
+        <child>
+          <object class="ttk.Labelframe" id="deth_frame">
+            <property name="height">80</property>
+            <property name="text" translatable="yes">Deth</property>
+            <property name="width">150</property>
+            <layout>
+              <property name="column">1</property>
+              <property name="propagate">False</property>
+              <property name="row">2</property>
+              <property name="sticky">nw</property>
+            </layout>
+            <child>
+              <object class="ttk.Checkbutton" id="chk_respawn">
+                <property name="text" translatable="yes">force respawn</property>
+                <layout>
+                  <property name="column">0</property>
+                  <property name="propagate">True</property>
+                  <property name="row">0</property>
+                  <property name="sticky">nw</property>
+                </layout>
+              </object>
+            </child>
+            <child>
+              <object class="ttk.Checkbutton" id="chk_farspawn">
+                <property name="text" translatable="yes">spawn farthest</property>
+                <layout>
+                  <property name="column">0</property>
+                  <property name="propagate">True</property>
+                  <property name="row">1</property>
+                  <property name="sticky">nw</property>
+                </layout>
+              </object>
+            </child>
+            <child>
+              <object class="ttk.Checkbutton" id="chk_nofall">
+                <property name="text" translatable="yes">no falling damage</property>
+                <layout>
+                  <property name="column">0</property>
+                  <property name="propagate">True</property>
+                  <property name="row">2</property>
+                  <property name="sticky">nw</property>
+                </layout>
+              </object>
+            </child>
+          </object>
+        </child>
+      </object>
+    </child>
+    <child>
+      <object class="ttk.Frame" id="Frame_3">
+        <property name="height">200</property>
+        <property name="width">200</property>
+        <layout>
+          <property name="column">0</property>
+          <property name="columnspan">2</property>
+          <property name="padx">25</property>
+          <property name="pady">10</property>
+          <property name="propagate">True</property>
+          <property name="row">1</property>
+        </layout>
+        <child>
+          <object class="ttk.Button" id="btn_dmflags">
+            <property name="text" translatable="yes">Update flags</property>
+            <layout>
+              <property name="column">0</property>
+              <property name="propagate">True</property>
+              <property name="row">0</property>
+              <property name="sticky">nsw</property>
+            </layout>
+          </object>
+        </child>
       </object>
     </child>
   </object>
