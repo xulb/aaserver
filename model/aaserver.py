@@ -26,10 +26,10 @@ class AAServer(rcon.RconClientProtocol):
         return DMFlags(self.cvar('dmflags'))
     @property
     def name(self):
-        return q2strip(self.cvar('hostname').split()[1])
+        return q2strip(self.cvar('hostname'))
     @property
     def admin(self):
-        return q2strip(self.cvar('admin').split()[1])
+        return q2strip(self.cvar('admin'))
 
     def cvar(self,cvar,value=None):
         if value or value == 0:
@@ -37,6 +37,8 @@ class AAServer(rcon.RconClientProtocol):
             return value
         else:
             resp = self.do_rcon_cmd(cvar)
+            if bad_pass_resp(resp):
+                raise RuntimeError(resp)
             resp = resp.rstrip();
             resp = re.sub('^.* is ','',resp)
             resp = re.sub('"','',resp)
@@ -118,7 +120,9 @@ def q2strip(s):
             else:
                 ret += c
     return ret
-                
+
+def bad_pass_resp(resp):
+    return re.match('Bad rcon.pass',resp)
 if __name__ == '__main__':
     args = dict(['host','port','passwd'],sys.argv[-3:])
     svr = AAServer((args['host'],args['port']),args['passwd'])
