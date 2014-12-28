@@ -200,6 +200,17 @@
                     </layout>
                   </object>
                 </child>
+                <child>
+                  <object class="ttk.Button" id="btn_dmflags">
+                    <property name="command">on_set_dmflags_click</property>
+                    <property name="text" translatable="yes">Set DM Flags</property>
+                    <layout>
+                      <property name="column">0</property>
+                      <property name="propagate">True</property>
+                      <property name="row">6</property>
+                    </layout>
+                  </object>
+                </child>
               </object>
             </child>
           </object>
@@ -536,7 +547,7 @@
               <object class="ttk.Checkbutton" id="chk_teamsskin">
                 <property name="onvalue">SKINTEAMS</property>
                 <property name="text" translatable="yes">teams by skin</property>
-                <property name="variable">string:f_teamskin</property>
+                <property name="variable">string:f_teamsskin</property>
                 <layout>
                   <property name="column">0</property>
                   <property name="propagate">True</property>
@@ -561,7 +572,10 @@
             </layout>
             <child>
               <object class="ttk.Checkbutton" id="chk_nobots">
+                <property name="onvalue">BOTS</property>
                 <property name="text" translatable="yes">disable bots</property>
+                <property name="variable">string:f_nobots</property>
+                <property name="width">0</property>
                 <layout>
                   <property name="column">0</property>
                   <property name="propagate">True</property>
@@ -572,7 +586,9 @@
             </child>
             <child>
               <object class="ttk.Checkbutton" id="chk_botaim">
+                <property name="onvalue">BOT_FUZZYAIM</property>
                 <property name="text" translatable="yes">bot perfect aim</property>
+                <property name="variable">string:f_botaim</property>
                 <layout>
                   <property name="column">0</property>
                   <property name="propagate">True</property>
@@ -583,7 +599,9 @@
             </child>
             <child>
               <object class="ttk.Checkbutton" id="chk_nobotchat">
+                <property name="onvalue">BOTCHAT</property>
                 <property name="text" translatable="yes">disable bot chat</property>
+                <property name="variable">string:f_nobotchat</property>
                 <layout>
                   <property name="column">0</property>
                   <property name="propagate">True</property>
@@ -594,7 +612,9 @@
             </child>
             <child>
               <object class="ttk.Checkbutton" id="chk_botautonode">
+                <property name="onvalue">BOT_AUTOSAVENODES</property>
                 <property name="text" translatable="yes">bot autosave nodes</property>
+                <property name="variable">string:f_botautonode</property>
                 <layout>
                   <property name="column">0</property>
                   <property name="propagate">True</property>
@@ -605,7 +625,9 @@
             </child>
             <child>
               <object class="ttk.Checkbutton" id="chk_alwaysadv">
+                <property name="onvalue">BOT_LEVELAD</property>
                 <property name="text" translatable="yes">always advance level</property>
+                <property name="variable">string:f_alwaysadv</property>
                 <layout>
                   <property name="column">0</property>
                   <property name="propagate">True</property>
@@ -629,7 +651,9 @@
             </layout>
             <child>
               <object class="ttk.Checkbutton" id="chk_respawn">
+                <property name="onvalue">FORCE_RESPAWN</property>
                 <property name="text" translatable="yes">force respawn</property>
+                <property name="variable">string:f_respawn</property>
                 <layout>
                   <property name="column">0</property>
                   <property name="propagate">True</property>
@@ -640,7 +664,9 @@
             </child>
             <child>
               <object class="ttk.Checkbutton" id="chk_farspawn">
+                <property name="onvalue">SPAWN_FARTHEST</property>
                 <property name="text" translatable="yes">spawn farthest</property>
+                <property name="variable">string:f_farspawn</property>
                 <layout>
                   <property name="column">0</property>
                   <property name="propagate">True</property>
@@ -651,7 +677,9 @@
             </child>
             <child>
               <object class="ttk.Checkbutton" id="chk_nofall">
+                <property name="onvalue">NO_FALLING</property>
                 <property name="text" translatable="yes">no falling damage</property>
+                <property name="variable">string:f_nofall</property>
                 <layout>
                   <property name="column">0</property>
                   <property name="propagate">True</property>
@@ -678,7 +706,7 @@
         </layout>
         <child>
           <object class="ttk.Button" id="btn_dmflags">
-            <property name="command">on_dmflags_click</property>
+            <property name="command">on_dmflags_dlg_click</property>
             <property name="text" translatable="yes">Update flags</property>
             <layout>
               <property name="column">0</property>
