@@ -1,5 +1,7 @@
 from model.aaserver import *
+from model.dmflags import *
 from unittest.mock import Mock
+import tkinter.messagebox as msgbox
 
 mockServer = Mock(spec=AAServer)
 mockServer.current_players = [
@@ -7,6 +9,7 @@ mockServer.current_players = [
     Player('[OS]^1Bis^2ki^7','999.33.2.1'),
     Player('>>Sander','5.4.3.23')
 ]
+mockServer.dmflags = DMFlags(2385176)
 mockServer.name = 'mock'
 mockServer.admin = 'Xulb'
 mockServer.maplist = "dm8 dm-ahtcity dm-atlantis2k8 dm-babel2k11 dm-blood dm-bloodfactory2k12 dm-bonechewer dm-chasmatic2k9 dm-corrosion dm-crucible2k12 dm-deathray dm-deimos2k9 dm-dismal2k11  dm-dungeon dm-dynamo2k12 dm-egyptian dm-electro dm-eternal  dm-frontier2 dm-furious2k8 dm-gladiator dm-goregrinder dm-hangar-beta dm-horus dm-impact dm-inferno dm-infinic dm-invasion dm-khanate dm-leviathan2k12 dm-liberation dm-mgcity2 dm-module dm-negator dm-neptune dm-nkitrn1 dm-oblivion dm-omega2k8 dm-outpost dm-purgatory  dm-titan2k8 dm-turbo2k8 dm-vesuvius2k11 dm-violator2k11 dm-warmachine2k10 dm-zorn2k11 dm-zion2k9".split()
@@ -44,6 +47,14 @@ class ServerController:
         self.server._poll_status()
         return self.server.current_players
 
+    def start_map_from_combobox(self):
+        the_map = self._getvar('selected_map').get()
+        if (msgbox.askokcancel("Start Map", "Start map %s?" % the_map)):
+            self.server.startmap(the_map)
+        
+    def get_dmflags(self):
+        return self.server.dmflags
+        
 
 #msg_servername
 #msg_svraddr

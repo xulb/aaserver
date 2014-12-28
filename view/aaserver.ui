@@ -314,6 +314,7 @@
   <object class="pygubu.builder.widgets.dialog" id="dialog_dmflags">
     <property name="height">100</property>
     <property name="modal">false</property>
+    <property name="title" translatable="yes">DMFlags</property>
     <property name="width">300</property>
     <child>
       <object class="ttk.Frame" id="Frame_1">
