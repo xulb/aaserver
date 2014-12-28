@@ -8,6 +8,7 @@ class DF(Enum):
     INSTANT_ITEMS = 0x00000010
     SAME_LEVEL = 0x00000020
     SKINTEAMS = 0x00000040
+    MODELTEAMS = 0x00000080
     NO_FRIENDLY_FIRE = 0x00000100
     SPAWN_FARTHEST = 0x00000200
     FORCE_RESPAWN = 0x00000400
@@ -15,6 +16,7 @@ class DF(Enum):
     ALLOW_EXIT = 0x00001000
     INFINITE_AMMO = 0x00002000
     QUAD_DROP = 0x00004000
+    FIXED_FOV = 0x00008000
     QUADFIRE_DROP = 0x00010000
     BOT_AUTOSAVENODES = 0x00020000
     BOTCHAT = 0x00040000
@@ -30,7 +32,7 @@ class DMFlags():
                 self.value += i.value if isinstance(i,Enum) else i
         else:
             self.value += enum_list_or_value
-            
+
     def __str__(self):
         ret = 'Flags: '
         ret += ' '.join([f.name for f in DF if self.is_set(f)])
