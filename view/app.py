@@ -48,6 +48,9 @@ class AlienArenaApp(pygubu.TkApplication):
         self.svr_dialog.wm_positionfrom(who="user")
         self.dmf_dialog = self._getobj('dialog_dmflags').toplevel
         self.dmf_dialog.wm_positionfrom(who="user")
+        for f in dmf_vars:
+            obj = f.replace('f_','chk_')
+            self._getobj(obj).configure(command=self._update_dmflags_value)
         self.mainwindow = self._getobj('aaserver_nbk')
         self.mainmenu = menu = self._getobj('menu_main')
         self.set_menu(menu)
@@ -109,6 +112,16 @@ class AlienArenaApp(pygubu.TkApplication):
                 self._getvar(f).set(dmf_vars[f])
             else:
                 self._getvar(f).set('')
+        self._update_dmflags_value()
+
+
+    def _update_dmflags_value(self):
+        value = 0
+        for f in dmf_vars:
+            flag = eval('DF.{0}'.format(dmf_vars[f]))
+            if self._getvar(f).get() == dmf_vars[f]:
+                value += flag.value
+        self._getvar('dmf_value').set(value)
 
 if __name__ == '__main__':
     root = tk.Tk()
