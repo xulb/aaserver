@@ -695,25 +695,57 @@
     </child>
     <child>
       <object class="ttk.Frame" id="Frame_3">
-        <property name="height">200</property>
-        <property name="width">200</property>
+        <property name="height">30</property>
+        <property name="width">300</property>
         <layout>
           <property name="column">0</property>
           <property name="columnspan">2</property>
           <property name="padx">25</property>
           <property name="pady">10</property>
-          <property name="propagate">True</property>
+          <property name="propagate">False</property>
           <property name="row">1</property>
+          <columns>
+            <column id="0">
+              <property name="minsize">75</property>
+              <property name="pad">0</property>
+            </column>
+            <column id="1">
+              <property name="minsize">75</property>
+              <property name="pad">0</property>
+            </column>
+          </columns>
         </layout>
         <child>
-          <object class="ttk.Button" id="btn_dmflags">
+          <object class="ttk.Button" id="btn_dmflags_1">
             <property name="command">on_dmflags_dlg_click</property>
             <property name="text" translatable="yes">Update flags</property>
+            <layout>
+              <property name="column">2</property>
+              <property name="padx">25</property>
+              <property name="propagate">True</property>
+              <property name="row">0</property>
+            </layout>
+          </object>
+        </child>
+        <child>
+          <object class="tk.Message" id="msg_dmfvalue">
+            <property name="textvariable">int:dmf_value</property>
+            <property name="width">70</property>
+            <layout>
+              <property name="column">1</property>
+              <property name="propagate">True</property>
+              <property name="row">0</property>
+            </layout>
+          </object>
+        </child>
+        <child>
+          <object class="ttk.Label" id="lbl_dmfvalue">
+            <property name="text" translatable="yes">Value:</property>
             <layout>
               <property name="column">0</property>
               <property name="propagate">True</property>
               <property name="row">0</property>
-              <property name="sticky">nsw</property>
+              <property name="sticky">e</property>
             </layout>
           </object>
         </child>
