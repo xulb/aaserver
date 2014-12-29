@@ -94,7 +94,11 @@ class AAServer(rcon.RconClientProtocol):
             if re.match('was kicked',resp):
                 return True
         return False
-                      
+
+    def set_dmflags(self, dmf):
+        if not dmf.value:
+            raise RuntimeError('No DMFlags set')
+        self.cvar('dmflags', dmf.value)
 
 class Player:
     def __init__(self, name, address):
