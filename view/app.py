@@ -41,19 +41,18 @@ class AlienArenaApp(pygubu.TkApplication):
     def _getobj(self,obj):
         return self.builder.get_object(obj,self.master)
     def _create_ui(self):
-        self.controller = ServerController(self)
+        self.controller = {}
+        self.current_svr_addr = None
+        self.svr_addrs = []
         self.builder = builder = pygubu.Builder()
         builder.add_from_file(ui_file)
         self.svr_dialog = self._getobj('dialog_open_server').toplevel
-        self.svr_dialog.wm_positionfrom(who="user")
         self.dmf_dialog = self._getobj('dialog_dmflags').toplevel
-        self.dmf_dialog.wm_positionfrom(who="user")
         for f in dmf_vars:
             obj = f.replace('f_','chk_')
             self._getobj(obj).configure(command=self._update_dmflags_value)
         self.mainwindow = self._getobj('aaserver_nbk')
         self.mainmenu = menu = self._getobj('menu_main')
-        self.set_menu(menu)
         self.set_title('AA Server Control')
         (self.ws,self.hs) = (self.master.winfo_screenwidth(),
                              self.master.winfo_screenheight())
@@ -61,54 +60,99 @@ class AlienArenaApp(pygubu.TkApplication):
 
 
     def on_menu_item_server_click(self):
+        (w,h,x,y) = _get_geometry(self.master)
         self.svr_dialog.deiconify()
+        self.svr_dialog.wait_visibility(self.svr_dialog)
+        (wd,hd,xd,yd) = _get_geometry(self.svr_dialog)
+        _set_geometry(self.svr_dialog, wd, hd, x+25, y+25)
 
     def on_svr_dlg_connect_click(self):
         try:
-            self.controller.set_server_from_dialog()
+            addr = self._getvar('open_svr_addr').get()
+            if not addr:
+                raise RuntimeError('No address specified')
+            self.current_svr_addr = addr
+            if addr not in self.svr_addrs:
+                self.svr_addrs.append(addr)
+            self.controller[addr] = ServerController(self)
+            self.controller[addr].set_server_from_dialog()
+            self._construct_player_table()
             self.svr_dialog.withdraw()
         except Exception as e:
-            msgbox.showerror(title="Connection", message=e)
+            msgbox.showerror(parent=self.svr_dialog,
+                             title="Connection", message=e)
 
     def on_send_cmd_click(self):
-        pass
+        addr = self.current_svr_addr
+        if not addr:
+            msgbox.showerror(parent=self.mainwindow,
+                             title="No connection", message="No server connected")
+        else:
+            pass
     def on_start_map_click(self):
-        try:
-            self.controller.start_map_from_combobox()
-        except RuntimeError as e:
-            if (re.match('Map.*not available',e)):
-                msgbox.showerror(title="Map Error", message=e)
-            else:
-                msgbox.showerror(title="Error", message=e)
+        addr = self.current_svr_addr
+        if not addr:
+            msgbox.showerror(parent=self.mainwindow,
+                             title="No connection", message="No server connected")
+        else :
+            if (msgbox.askokcancel(parent=self.mainwindow,
+                                   title="Start Map", message="Start new map?")):
+                try:
+                    self.controller[addr].start_map_from_combobox()
+                except RuntimeError as e:
+                    if (re.match('Map.*not available',e)):
+                        msgbox.showerror(parent=self.mainwindow,
+                                         title="Map Error", message=e)
+                    else:
+                        msgbox.showerror(parent=self.mainwindow,
+                                     title="Error", message=e)
 
     def on_refresh_click(self):
         self._construct_player_table()
 
     def on_set_dmflags_click(self):
-        dmf = self.controller.get_dmflags()
-        self._update_dmflags_boxes(dmf)
-        self.dmf_dialog.deiconify()
+        addr = self.current_svr_addr
+        if not addr:
+            msgbox.showerror(parent=self.mainwindow,
+                             title="No connection", message="No server connected")
+        else:
+            dmf = self.controller[addr].get_dmflags()
+            self._update_dmflags_boxes(dmf)
+            self.dmf_dialog.deiconify()
 
     def on_dmflags_dlg_click(self):
-        self.controller.set_dmflags(DMFlags(self._getvar('dmf_value').get()))
-        self.dmf_dialog.withdraw()
+        addr = self.current_svr_addr
+        if not addr:
+            msgbox.showerror(parent=self.mainwindow,
+                             title="No connection", message="No server connected")
+            self.dmf_dialog.withdraw()
+        else:
+            self.controller[addr].set_dmflags(DMFlags(self._getvar('dmf_value').get()))
+            self.dmf_dialog.withdraw()
 
     def _construct_player_table(self):
-        players = self.controller.get_current_players()
-        pl_frame = self._getobj('plyr_tab_frame')
+        addr = self.current_svr_addr
+        if not addr:
+            return
+        players = self.controller[addr].get_current_players()
+        pl_frame = self._getobj('plyr_frame')
+        for c in pl_frame.winfo_children():
+            c.grid_forget()
         lbls_name=[]
         lbls_addr=[]
         btns_kick=[]
         for pl in players:
-            lbls_name.append(tk.Label(pl_frame, width=16, text=pl.stripped_name))
-            lbls_addr.append(tk.Label(pl_frame, width=16, text=pl.address))
+            lbls_name.append(tk.Label(pl_frame, width=16, text=pl.stripped_name,relief='ridge'))
+            lbls_addr.append(tk.Label(pl_frame, width=16, text=pl.address,relief='ridge'))
             btns_kick.append(tk.Button(pl_frame, text='Kick'))
         for (n,a,k) in zip(lbls_name,lbls_addr,btns_kick):
-            n.grid(column=0)
+            n.grid(in_=pl_frame,column=0)
             ninfo= n.grid_info()
             a.grid(row=ninfo['row'],column=1)
             k.grid(row=ninfo['row'],column=2)
- 
+        # necessary to get scrollbar to show and work:
+        self._getobj('plyr_scframe').reposition() 
+
     def _update_dmflags_boxes(self,dmf):
         for f in dmf_vars:
             flag = eval('DF.{0}'.format(dmf_vars[f]))
@@ -127,6 +171,11 @@ class AlienArenaApp(pygubu.TkApplication):
                 value += flag.value
         self._getvar('dmf_value').set(value)
 
+def _get_geometry(tl_obj):
+    return map(int, re.split('[x+]',tl_obj.geometry()))
+
+def _set_geometry(tl_obj,w,h,x,y):
+    tl_obj.geometry("%dx%d+%d+%d" % (w,h,x,y))
 
 if __name__ == '__main__':
     root = tk.Tk()
