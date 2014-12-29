@@ -729,6 +729,7 @@
         </child>
         <child>
           <object class="tk.Message" id="msg_dmfvalue">
+            <property name="cursor">xterm</property>
             <property name="textvariable">int:dmf_value</property>
             <property name="width">70</property>
             <layout>
