@@ -2,7 +2,7 @@
 import sys
 sys.path.extend(['.','..'])
 from controller.svr_controller import *
-from model.dmflags import DF
+from model.dmflags import *
 import os
 import tkinter as tk
 import tkinter.messagebox as msgbox
@@ -55,7 +55,10 @@ class AlienArenaApp(pygubu.TkApplication):
         self.mainmenu = menu = self._getobj('menu_main')
         self.set_menu(menu)
         self.set_title('AA Server Control')
+        (self.ws,self.hs) = (self.master.winfo_screenwidth(),
+                             self.master.winfo_screenheight())
         builder.connect_callbacks(self)
+
 
     def on_menu_item_server_click(self):
         self.svr_dialog.deiconify()
@@ -87,6 +90,7 @@ class AlienArenaApp(pygubu.TkApplication):
         self.dmf_dialog.deiconify()
 
     def on_dmflags_dlg_click(self):
+        self.controller.set_dmflags(DMFlags(self._getvar('dmf_value').get()))
         self.dmf_dialog.withdraw()
 
     def _construct_player_table(self):
@@ -122,6 +126,7 @@ class AlienArenaApp(pygubu.TkApplication):
             if self._getvar(f).get() == dmf_vars[f]:
                 value += flag.value
         self._getvar('dmf_value').set(value)
+
 
 if __name__ == '__main__':
     root = tk.Tk()
