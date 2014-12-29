@@ -1,7 +1,6 @@
 from model.aaserver import *
 from model.dmflags import *
 from unittest.mock import Mock
-import tkinter.messagebox as msgbox
 
 mockServer = Mock(spec=AAServer)
 mockServer.current_players = [
@@ -51,8 +50,9 @@ class ServerController:
 
     def start_map_from_combobox(self):
         the_map = self._getvar('selected_map').get()
-        if (msgbox.askokcancel("Start Map", "Start map %s?" % the_map)):
-            self.server.startmap(the_map)
+        if not the_map:
+            return
+        self.server.startmap(the_map)
         
     def get_dmflags(self):
         return self.server.dmflags
