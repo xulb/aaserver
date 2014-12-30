@@ -1,4 +1,3 @@
-#!/usr/bin/python3
 import sys
 from pdb import set_trace
 sys.path.extend(['.','..'])
@@ -77,6 +76,7 @@ class AlienArenaApp(pygubu.TkApplication):
             self.current_svr_addr = addr
             if addr not in self.svr_addrs:
                 self.svr_addrs.append(addr)
+                self._getobj('menu_item_server').add_command(label=addr,command=self._set_server_from_menu(addr))
             self.controller[addr] = ServerController(self)
             self.controller[addr].set_server_from_dialog()
             self._construct_player_table()
@@ -97,6 +97,8 @@ class AlienArenaApp(pygubu.TkApplication):
         if not addr:
             msgbox.showerror(parent=self.mainwindow,
                              title="No connection", message="No server connected")
+        if not self._getvar('selected_map').get():
+            return
         else :
             if (msgbox.askokcancel(parent=self.mainwindow,
                                    title="Start Map", message="Start new map?")):
@@ -121,7 +123,12 @@ class AlienArenaApp(pygubu.TkApplication):
         else:
             dmf = self.controller[addr].get_dmflags()
             self._update_dmflags_boxes(dmf)
+            (w,h,x,y) = _get_geometry(self.master)
             self.dmf_dialog.deiconify()
+            self.dmf_dialog.wait_visibility(self.dmf_dialog)
+            (wd,hd,xd,yd) = _get_geometry(self.dmf_dialog)
+            _set_geometry(self.dmf_dialog, wd, hd, x+24, y+24)
+            _set_geometry(self.dmf_dialog, wd, hd, x+25, y+25)
 
     def on_dmflags_dlg_click(self):
         addr = self.current_svr_addr
@@ -130,8 +137,10 @@ class AlienArenaApp(pygubu.TkApplication):
                              title="No connection", message="No server connected")
             self.dmf_dialog.withdraw()
         else:
-            self.controller[addr].set_dmflags(DMFlags(self._getvar('dmf_value').get()))
-            self.dmf_dialog.withdraw()
+            if (msgbox.askokcancel(parent=self.dmf_dialog,
+                                   title="Set DMFlags", message="Apply new flag settings?")):
+                self.controller[addr].set_dmflags(DMFlags(self._getvar('dmf_value').get()))
+                self.dmf_dialog.withdraw()
 
     def _construct_player_table(self):
         addr = self.current_svr_addr
@@ -173,7 +182,7 @@ class AlienArenaApp(pygubu.TkApplication):
             if self._getvar(f).get() == dmf_vars[f]:
                 value += flag.value
         self._getvar('dmf_value').set(value)
-    
+
     def _kick_player(self,plyr):
         def kick():
             nonlocal plyr
@@ -182,6 +191,16 @@ class AlienArenaApp(pygubu.TkApplication):
                                   title="Kick",message="Kick %s?" % plyr.stripped_name):
                 self.controller[self.current_svr_addr].kick_player(plyr)
         return kick
+
+    def _set_server_from_menu(self,addr):
+        def set_svr():
+            nonlocal addr
+            nonlocal self
+            self.current_svr_addr=addr
+            self.controller[addr]._update_server_info()
+            self._construct_player_table()
+        return set_svr   
+        
 
 def _get_geometry(tl_obj):
     return map(int, re.split('[x+]',tl_obj.geometry()))
