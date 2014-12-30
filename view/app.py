@@ -1,5 +1,6 @@
 #!/usr/bin/python3
 import sys
+from pdb import set_trace
 sys.path.extend(['.','..'])
 from controller.svr_controller import *
 from model.dmflags import *
@@ -52,7 +53,9 @@ class AlienArenaApp(pygubu.TkApplication):
             obj = f.replace('f_','chk_')
             self._getobj(obj).configure(command=self._update_dmflags_value)
         self.mainwindow = self._getobj('aaserver_nbk')
+        self.master.winfo_toplevel().resizable(width=False,height=False)
         self.mainmenu = menu = self._getobj('menu_main')
+        self._getobj('plyr_scframe')._clipper.config(width=380,height=150)
         self.set_title('AA Server Control')
         (self.ws,self.hs) = (self.master.winfo_screenwidth(),
                              self.master.winfo_screenheight())
@@ -142,9 +145,9 @@ class AlienArenaApp(pygubu.TkApplication):
         lbls_addr=[]
         btns_kick=[]
         for pl in players:
-            lbls_name.append(tk.Label(pl_frame, width=16, text=pl.stripped_name,relief='ridge'))
-            lbls_addr.append(tk.Label(pl_frame, width=16, text=pl.address,relief='ridge'))
-            btns_kick.append(tk.Button(pl_frame, text='Kick'))
+            lbls_name.append(tk.Label(pl_frame, width=16, height=2, text=pl.stripped_name,relief='ridge'))
+            lbls_addr.append(tk.Label(pl_frame, width=16, height=2,text=pl.address,relief='ridge'))
+            btns_kick.append(tk.Button(pl_frame, text='Kick', command=self._kick_player(pl)))
         for (n,a,k) in zip(lbls_name,lbls_addr,btns_kick):
             n.grid(in_=pl_frame,column=0)
             ninfo= n.grid_info()
@@ -170,6 +173,15 @@ class AlienArenaApp(pygubu.TkApplication):
             if self._getvar(f).get() == dmf_vars[f]:
                 value += flag.value
         self._getvar('dmf_value').set(value)
+    
+    def _kick_player(self,plyr):
+        def kick():
+            nonlocal plyr
+            nonlocal self
+            if msgbox.askokcancel(parent=self.mainwindow,
+                                  title="Kick",message="Kick %s?" % plyr.stripped_name):
+                self.controller[self.current_svr_addr].kick_player(plyr)
+        return kick
 
 def _get_geometry(tl_obj):
     return map(int, re.split('[x+]',tl_obj.geometry()))
