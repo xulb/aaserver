@@ -7,9 +7,11 @@
       <property name="column">0</property>
       <property name="propagate">True</property>
       <property name="row">0</property>
+      <property name="sticky">nesw</property>
     </layout>
     <child>
       <object class="ttk.Notebook.Tab" id="svr_tab">
+        <property name="sticky">nesw</property>
         <property name="text" translatable="yes">Server</property>
         <child>
           <object class="ttk.Frame" id="svr_tab_frame">
@@ -19,6 +21,7 @@
               <property name="column">0</property>
               <property name="propagate">True</property>
               <property name="row">0</property>
+              <property name="sticky">nesw</property>
             </layout>
             <child>
               <object class="ttk.Labelframe" id="svr_frame">
@@ -27,8 +30,9 @@
                 <property name="width">400</property>
                 <layout>
                   <property name="column">0</property>
-                  <property name="propagate">False</property>
+                  <property name="propagate">True</property>
                   <property name="row">0</property>
+                  <property name="sticky">nesw</property>
                   <columns>
                     <column id="0">
                       <property name="minsize">90</property>
@@ -106,18 +110,6 @@
                     </layout>
                   </object>
                 </child>
-                <child>
-                  <object class="ttk.Button" id="btn_refresh">
-                    <property name="command">on_refresh_click</property>
-                    <property name="text" translatable="yes">Refresh</property>
-                    <layout>
-                      <property name="column">2</property>
-                      <property name="propagate">True</property>
-                      <property name="row">2</property>
-                      <property name="sticky">ne</property>
-                    </layout>
-                  </object>
-                </child>
               </object>
             </child>
             <child>
@@ -127,8 +119,9 @@
                 <property name="width">400</property>
                 <layout>
                   <property name="column">0</property>
-                  <property name="propagate">False</property>
+                  <property name="propagate">True</property>
                   <property name="row">1</property>
+                  <property name="sticky">nesw</property>
                   <columns>
                     <column id="0">
                       <property name="minsize">42</property>
@@ -219,30 +212,98 @@
     </child>
     <child>
       <object class="ttk.Notebook.Tab" id="plyr_tab">
+        <property name="sticky">nesw</property>
         <property name="text" translatable="yes">Players</property>
         <child>
           <object class="ttk.Frame" id="plyr_tab_frame">
-            <property name="height">200</property>
-            <property name="width">200</property>
+            <property name="relief">flat</property>
+            <property name="width">400</property>
             <layout>
               <property name="column">0</property>
               <property name="propagate">True</property>
               <property name="row">0</property>
+              <property name="sticky">nesw</property>
             </layout>
+            <child>
+              <object class="ttk.Frame" id="plyr_control_frame">
+                <property name="height">50</property>
+                <property name="width">400</property>
+                <layout>
+                  <property name="column">0</property>
+                  <property name="propagate">True</property>
+                  <property name="row">0</property>
+                </layout>
+                <child>
+                  <object class="ttk.Button" id="btn_refresh">
+                    <property name="command">on_refresh_click</property>
+                    <property name="text" translatable="yes">Refresh</property>
+                    <layout>
+                      <property name="column">0</property>
+                      <property name="propagate">True</property>
+                      <property name="row">0</property>
+                    </layout>
+                  </object>
+                </child>
+              </object>
+            </child>
+            <child>
+              <object class="ttk.Frame" id="plyr_list_border_frame">
+                <property name="borderwidth">2</property>
+                <property name="height">200</property>
+                <property name="relief">ridge</property>
+                <property name="width">400</property>
+                <layout>
+                  <property name="column">0</property>
+                  <property name="propagate">True</property>
+                  <property name="row">1</property>
+                  <property name="sticky">nesw</property>
+                </layout>
+                <child>
+                  <object class="pygubu.builder.widgets.scrolledframe" id="plyr_scframe">
+                    <property name="height">150</property>
+                    <property name="scrolltype">vertical</property>
+                    <property name="width">400</property>
+                    <layout>
+                      <property name="column">0</property>
+                      <property name="propagate">True</property>
+                      <property name="row">0</property>
+                      <property name="sticky">we</property>
+                    </layout>
+                    <child>
+                      <object class="ttk.Frame" id="plyr_frame">
+                        <property name="height">150</property>
+                        <property name="width">400</property>
+                        <layout>
+                          <property name="column">0</property>
+                          <property name="propagate">True</property>
+                          <property name="row">0</property>
+                          <property name="sticky">nesw</property>
+                        </layout>
+                      </object>
+                    </child>
+                  </object>
+                </child>
+              </object>
+            </child>
           </object>
         </child>
       </object>
     </child>
   </object>
   <object class="tk.Menu" id="menu_main">
-    <property name="tearoff">true</property>
+    <property name="tearoff">false</property>
     <child>
-      <object class="tk.Menuitem.Command" id="menu_item_server">
-        <property name="command">on_menu_item_server_click</property>
-        <property name="command_id_arg">false</property>
-        <property name="font">TkDefaultFont</property>
-        <property name="label" translatable="yes">Server</property>
-        <property name="state">normal</property>
+      <object class="tk.Menuitem.Submenu" id="connect_menu">
+        <property name="label" translatable="yes">Connect</property>
+        <child>
+          <object class="tk.Menuitem.Command" id="menu_item_server">
+            <property name="command">on_menu_item_server_click</property>
+            <property name="command_id_arg">false</property>
+            <property name="font">TkDefaultFont</property>
+            <property name="label" translatable="yes">New Server</property>
+            <property name="state">normal</property>
+          </object>
+        </child>
       </object>
     </child>
   </object>
@@ -262,6 +323,7 @@
           <property name="column">0</property>
           <property name="propagate">True</property>
           <property name="row">0</property>
+          <property name="sticky">nesw</property>
         </layout>
       </object>
     </child>
@@ -272,6 +334,7 @@
           <property name="column">1</property>
           <property name="propagate">True</property>
           <property name="row">0</property>
+          <property name="sticky">nesw</property>
         </layout>
       </object>
     </child>
@@ -282,6 +345,7 @@
           <property name="column">0</property>
           <property name="propagate">True</property>
           <property name="row">1</property>
+          <property name="sticky">nesw</property>
         </layout>
       </object>
     </child>
@@ -292,6 +356,7 @@
           <property name="column">1</property>
           <property name="propagate">True</property>
           <property name="row">1</property>
+          <property name="sticky">nesw</property>
         </layout>
       </object>
     </child>
