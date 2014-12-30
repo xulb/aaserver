@@ -90,7 +90,7 @@ class AAServer(rcon.RconClientProtocol):
         candidates = [p for p in self.current_players
                       if name == p.name or name == p.stripped_name]
         if candidates:
-            resp = self.do_rcon_command("kick %s" % p.name)
+            resp = self.do_rcon_cmd("kick %s" % candidates[0].name)
             if re.match('was kicked',resp):
                 return True
         return False
