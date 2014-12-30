@@ -6,6 +6,12 @@ mockServer = Mock(spec=AAServer)
 mockServer.current_players = [
     Player('Xulb','111.222.333.444'),
     Player('[OS]^1Bis^2ki^7','999.33.2.1'),
+    Player('>>Sander','5.4.3.23'),
+    Player('Xulb','111.222.333.444'),
+    Player('[OS]^1Bis^2ki^7','999.33.2.1'),
+    Player('>>Sander','5.4.3.23'),
+    Player('Xulb','111.222.333.444'),
+    Player('[OS]^1Bis^2ki^7','999.33.2.1'),
     Player('>>Sander','5.4.3.23')
 ]
 mockServer.dmflags = DMFlags(2385176)
@@ -39,7 +45,11 @@ class ServerController:
         addr = tuple(
             self._getvar('open_svr_addr').get().split(':'))
         passwd =self._getvar('open_svr_pass').get()
+        passwd = passwd.strip()
         self._set_server_and_connect(addr,passwd)
+        self._update_server_info()
+
+    def _update_server_info(self):
         self._getvar('server_name').set(self.name)
         self._getvar('svr_addr').set(":".join(self.address))
         self._getobj('cmb_maps').configure(values=self.maplist)
@@ -59,6 +69,9 @@ class ServerController:
 
     def set_dmflags(self,dmf):
         self.server.set_dmflags(dmf)
+
+    def kick_player(self,plyr):
+        self.server.kick(plyr)
         
 
 #msg_servername
