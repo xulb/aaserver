@@ -80,6 +80,7 @@ class AlienArenaApp(pygubu.TkApplication):
             self.controller[addr] = ServerController(self)
             self.controller[addr].set_server_from_dialog()
             self._construct_player_table()
+            self._update_current_map()
             self.svr_dialog.withdraw()
         except Exception as e:
             msgbox.showerror(parent=self.svr_dialog,
@@ -111,9 +112,11 @@ class AlienArenaApp(pygubu.TkApplication):
                     else:
                         msgbox.showerror(parent=self.mainwindow,
                                      title="Error", message=e)
+        self._getvar('selected_map').set('')
 
     def on_refresh_click(self):
         self._construct_player_table()
+        self._update_current_map()
 
     def on_set_dmflags_click(self):
         addr = self.current_svr_addr
@@ -165,6 +168,13 @@ class AlienArenaApp(pygubu.TkApplication):
         # necessary to get scrollbar to show and work:
         self._getobj('plyr_scframe').reposition() 
 
+    def _update_current_map(self):
+        addr = self.current_svr_addr
+        if not addr:
+            return
+        current_map = self.controller[addr].get_current_map()
+        self._getvar('current_map').set(current_map)
+
     def _update_dmflags_boxes(self,dmf):
         for f in dmf_vars:
             flag = eval('DF.{0}'.format(dmf_vars[f]))
@@ -199,6 +209,7 @@ class AlienArenaApp(pygubu.TkApplication):
             self.current_svr_addr=addr
             self.controller[addr]._update_server_info()
             self._construct_player_table()
+            self._update_current_map()
         return set_svr   
         
 

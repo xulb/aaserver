@@ -14,6 +14,7 @@ mockServer.current_players = [
     Player('[OS]^1Bis^2ki^7','999.33.2.1'),
     Player('>>Sander','5.4.3.23')
 ]
+mockServer.current_map = "dm-ahtcity"
 mockServer.dmflags = DMFlags(2385176)
 mockServer.name = 'mock'
 mockServer.admin = 'Xulb'
@@ -57,6 +58,10 @@ class ServerController:
     def get_current_players(self):
         self.server._poll_status()
         return self.server.current_players
+
+    def get_current_map(self):
+        self.server._poll_status()
+        return self.server.current_map
 
     def start_map_from_combobox(self):
         the_map = self._getvar('selected_map').get()
