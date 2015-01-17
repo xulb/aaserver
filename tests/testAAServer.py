@@ -6,6 +6,7 @@ import model.aaserver as aaserver
 import model.rcon as rcon
 from tests.testArgs import testArgs
 
+
 args = testArgs()
 address=(args.host,args.port)
 bad_address=(args.host,'65000')
