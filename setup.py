@@ -11,7 +11,7 @@ setup(
     author = "Xulb Alien",
     author_email = "xulb.aa@gmail.com",
     description = "A simple GUI for controlling AlienArena servers",
-    license = "PSF",
+    license = "GPLv2",
     keywords = "alienarena aa quake2 rcon",
     url = "https://github.com/xulb/aaserver"
 )
