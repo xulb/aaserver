@@ -3,7 +3,7 @@ import model.rcon as rcon
 import asyncio
 import re
 import sys
-from testArgs import testArgs
+from tests.testArgs import testArgs
 
 args = testArgs()
 address=(args.host,args.port)

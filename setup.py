@@ -1,6 +1,6 @@
 from setuptools import setup, find_packages
 setup(
-    name = "aaempire"
+    name = "aaempire",
     version = "0.1",
     packages = find_packages(),
     scripts = ["aaempire.py"],
@@ -8,6 +8,7 @@ setup(
     package_data = {
         '':["*.ui"]
     },
+    test_suite="tests",
     author = "Xulb Alien",
     author_email = "xulb.aa@gmail.com",
     description = "A simple GUI for controlling AlienArena servers",

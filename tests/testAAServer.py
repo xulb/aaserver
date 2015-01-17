@@ -4,7 +4,7 @@ import unittest
 from unittest.mock import MagicMock
 import model.aaserver as aaserver
 import model.rcon as rcon
-from testArgs import testArgs
+from tests.testArgs import testArgs
 
 args = testArgs()
 address=(args.host,args.port)
