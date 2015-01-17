@@ -3,15 +3,11 @@ from pdb import set_trace
 sys.path.extend(['.','..'])
 from controller.svr_controller import *
 from model.dmflags import *
+from pkg_resources import resource_filename
 import os
 import tkinter as tk
 import tkinter.messagebox as msgbox
 import pygubu
-
-
-ui_file = os.path.join(os.path.dirname(os.path.realpath(__file__)),'aaserver.ui')
-
-
 
 class AlienArenaApp(pygubu.TkApplication):
     def _getvar(self,var):
@@ -23,7 +19,7 @@ class AlienArenaApp(pygubu.TkApplication):
         self.current_svr_addr = None
         self.svr_addrs = []
         self.builder = builder = pygubu.Builder()
-        builder.add_from_file(ui_file)
+        builder.add_from_file(resource_filename('view','aaserver.ui'))
         self.svr_dialog = self._getobj('dialog_open_server').toplevel
         self.dmf_dialog = self._getobj('dialog_dmflags').toplevel
         for f in dmf_vars:
