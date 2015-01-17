@@ -11,29 +11,7 @@ import pygubu
 
 ui_file = os.path.join(os.path.dirname(os.path.realpath(__file__)),'aaserver.ui')
 
-dmf_vars = {
-    'f_nopwr' : 'NO_ITEMS',
-    'f_instant' : 'INSTANT_ITEMS',
-    'f_quaddrop' : 'QUAD_DROP',
-    'f_nohealth' : 'NO_HEALTH',
-    'f_weapstay' : 'WEAPONS_STAY',
-    'f_infammo' : 'INFINITE_AMMO',
-    'f_noarmor' : 'NO_ARMOR',
-    'f_samemap' : 'SAME_LEVEL',
-    'f_allowexit' : 'ALLOW_EXIT',
-    'f_fixfov' : 'FIXED_FOV',
-    'f_noffire' : 'NO_FRIENDLY_FIRE',
-    'f_teamsmodel' : 'MODELTEAMS',
-    'f_teamsskin' : 'SKINTEAMS',
-    'f_nobots' : 'BOTS',
-    'f_botaim' : 'BOT_FUZZYAIM',
-    'f_nobotchat' : 'BOTCHAT',
-    'f_botautonode' : 'BOT_AUTOSAVENODES',
-    'f_alwaysadv' : 'BOT_LEVELAD',
-    'f_respawn' : 'FORCE_RESPAWN',
-    'f_farspawn' : 'SPAWN_FARTHEST',
-    'f_nofall' : 'NO_FALLING'
-}
+
 
 class AlienArenaApp(pygubu.TkApplication):
     def _getvar(self,var):
