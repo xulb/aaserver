@@ -5,11 +5,21 @@ from controller.svr_controller import *
 from model.dmflags import *
 from pkg_resources import resource_filename
 import os
+import os.path
 import tkinter as tk
 import tkinter.messagebox as msgbox
 import pygubu
 
+# TODO: wrap all controller hits in try/except,
+#  throw up an error box if fail.
+
+homedir = os.path.expanduser("~")
+rc_paths = [os.path.curdir,homedir,
+            os.path.join(homedir,".codered"),
+            os.path.join(homedir,".local","share","cor-games")]
+
 class AlienArenaApp(pygubu.TkApplication):
+    rcf = ''
     def _getvar(self,var):
         return self.builder.get_variable(var)
     def _getobj(self,obj):
@@ -32,8 +42,53 @@ class AlienArenaApp(pygubu.TkApplication):
         self.set_title('AA Server Control')
         (self.ws,self.hs) = (self.master.winfo_screenwidth(),
                              self.master.winfo_screenheight())
+        self.load_menu_from_rc()
         builder.connect_callbacks(self)
 
+    def load_menu_from_rc(self):
+        rcf = self._find_rcf()
+        if not rcf:
+            return
+        rcf = open(rcf)
+        for line in rcf:
+            if line[0] == '#':
+                continue
+            hpp = line.split()
+            address = (hpp[0],hpp[1])
+            addr = ":".join(address)
+            pwd = hpp[2]
+            if (not (addr and pwd)):
+                continue
+            try:
+                self.controller[addr] = ServerController(self)
+                self.controller[addr]._set_server_and_connect(address,pwd)
+                self._getobj('menu_item_server').add_command(
+                    label=addr,
+                    command=self._set_server_from_menu(addr)
+                )
+            except Exception as e:
+                msgbox.showerror(parent=self.master,
+                                 title="aaempirerc",
+                                 message="For {addr}: \n{msg}".format(addr=addr,msg=e))
+            
+        pass
+
+    def save_menu_to_rc(self):
+        rcf = self._find_rcf()
+        pass
+
+    def _find_rcf(self):
+        if self.rcf:
+            return rcf
+        else :
+            global rc_paths
+            rcf = ''
+            for p in rc_paths:
+                rcf = os.path.join(p,".aaempirerc")
+                if os.path.exists(rcf):
+                    break
+            self.rcf = rcf
+            return self.rcf
 
     def on_menu_item_server_click(self):
         (w,h,x,y) = _get_geometry(self.master)
