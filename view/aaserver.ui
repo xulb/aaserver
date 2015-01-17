@@ -135,7 +135,7 @@
                       <property name="column">1</property>
                       <property name="propagate">True</property>
                       <property name="row">5</property>
-                      <property name="sticky">w</property>
+                      <property name="sticky">we</property>
                     </layout>
                   </object>
                 </child>
@@ -158,6 +158,7 @@
                       <property name="column">1</property>
                       <property name="propagate">True</property>
                       <property name="row">3</property>
+                      <property name="sticky">we</property>
                     </layout>
                   </object>
                 </child>
@@ -168,7 +169,7 @@
                       <property name="column">0</property>
                       <property name="propagate">True</property>
                       <property name="row">3</property>
-                      <property name="sticky">w</property>
+                      <property name="sticky">we</property>
                     </layout>
                   </object>
                 </child>
@@ -190,18 +191,47 @@
                       <property name="column">0</property>
                       <property name="propagate">True</property>
                       <property name="row">5</property>
+                      <property name="sticky">we</property>
                     </layout>
                   </object>
                 </child>
                 <child>
-                  <object class="ttk.Button" id="btn_dmflags">
-                    <property name="command">on_set_dmflags_click</property>
-                    <property name="text" translatable="yes">Set DM Flags</property>
+                  <object class="ttk.Frame" id="cntl_btn_frame">
+                    <property name="height">200</property>
+                    <property name="width">200</property>
                     <layout>
                       <property name="column">0</property>
+                      <property name="columnspan">3</property>
+                      <property name="pady">10</property>
                       <property name="propagate">True</property>
-                      <property name="row">6</property>
+                      <property name="row">7</property>
                     </layout>
+                    <child>
+                      <object class="ttk.Button" id="btn_dmflags">
+                        <property name="command">on_set_dmflags_click</property>
+                        <property name="text" translatable="yes">Set DM Flags</property>
+                        <layout>
+                          <property name="column">0</property>
+                          <property name="padx">5</property>
+                          <property name="propagate">True</property>
+                          <property name="row">6</property>
+                          <property name="sticky">w</property>
+                        </layout>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="ttk.Button" id="btn_svr_refresh">
+                        <property name="command">on_refresh_click</property>
+                        <property name="text" translatable="yes">Refresh</property>
+                        <layout>
+                          <property name="column">1</property>
+                          <property name="padx">5</property>
+                          <property name="propagate">True</property>
+                          <property name="row">6</property>
+                          <property name="sticky">e</property>
+                        </layout>
+                      </object>
+                    </child>
                   </object>
                 </child>
               </object>
