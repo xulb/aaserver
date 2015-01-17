@@ -14,9 +14,11 @@ import pygubu
 #  throw up an error box if fail.
 
 homedir = os.path.expanduser("~")
-rc_paths = [os.path.curdir,homedir,
+rc_paths = [os.path.join(homedir,".local","share","cor-games"),
             os.path.join(homedir,".codered"),
-            os.path.join(homedir,".local","share","cor-games")]
+            homedir]
+
+rc_paths.append(os.path.curdir)
 
 class AlienArenaApp(pygubu.TkApplication):
     rcf = ''
@@ -38,12 +40,17 @@ class AlienArenaApp(pygubu.TkApplication):
         self.mainwindow = self._getobj('aaserver_nbk')
         self.master.winfo_toplevel().resizable(width=False,height=False)
         self.mainmenu = menu = self._getobj('menu_main')
+        builder.connect_callbacks(self)
+        # following needed to get scroll to show up
         self._getobj('plyr_scframe')._clipper.config(width=380,height=150)
         self.set_title('AA Server Control')
         (self.ws,self.hs) = (self.master.winfo_screenwidth(),
                              self.master.winfo_screenheight())
+        self._menu_dirty = False
         self.load_menu_from_rc()
-        builder.connect_callbacks(self)
+
+
+
 
     def load_menu_from_rc(self):
         rcf = self._find_rcf()
@@ -67,19 +74,33 @@ class AlienArenaApp(pygubu.TkApplication):
                     command=self._set_server_from_menu(addr)
                 )
             except Exception as e:
+                del self.controller[addr]
                 msgbox.showerror(parent=self.master,
                                  title="aaempirerc",
                                  message="For {addr}: \n{msg}".format(addr=addr,msg=e))
-            
-        pass
+                self._menu_dirty = True
 
     def save_menu_to_rc(self):
         rcf = self._find_rcf()
-        pass
+        if not rcf:
+            global rc_paths
+            for dir in rc_paths:
+                if os.path.exists(dir):
+                    rcf = os.path.join(dir,".aaempirerc")
+                    break
+        rcf = open(rcf, "w")
+        for s in self.controller:
+            hp = s.split(":")
+            pw = self.controller[s].passwd
+            print( "{host}\t{port}\t{pw}".format( host = hp[0],
+                                                  port = hp[1],
+                                                  pw = pw ),
+                   file=rcf)
+        rcf.close()
 
     def _find_rcf(self):
         if self.rcf:
-            return rcf
+            return self.rcf
         else :
             global rc_paths
             rcf = ''
@@ -90,12 +111,22 @@ class AlienArenaApp(pygubu.TkApplication):
             self.rcf = rcf
             return self.rcf
 
+    def _ask_to_save(self):
+        if self._menu_dirty:
+            if (msgbox.askokcancel(parent=self.mainwindow,
+                                   title="Save server list",
+                                   message="Save server list to .aaempirerc?")):
+                self.save_menu_to_rc()
+
     def on_menu_item_server_click(self):
         (w,h,x,y) = _get_geometry(self.master)
         self.svr_dialog.deiconify()
         self.svr_dialog.wait_visibility(self.svr_dialog)
         (wd,hd,xd,yd) = _get_geometry(self.svr_dialog)
         _set_geometry(self.svr_dialog, wd, hd, x+25, y+25)
+
+    def on_menu_item_save_click(self):
+        self._ask_to_save()
 
     def on_svr_dlg_connect_click(self):
         try:
@@ -105,6 +136,7 @@ class AlienArenaApp(pygubu.TkApplication):
             self.current_svr_addr = addr
             if addr not in self.svr_addrs:
                 self.svr_addrs.append(addr)
+                self._menu_dirty=True
                 self._getobj('menu_item_server').add_command(label=addr,command=self._set_server_from_menu(addr))
             self.controller[addr] = ServerController(self)
             self.controller[addr].set_server_from_dialog()
