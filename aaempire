@@ -1,4 +1,5 @@
 #!/usr/bin/python3
+#-*-python-*-
 import tkinter as tk
 from view.app import *
 
