@@ -2,6 +2,7 @@ import sys
 from pdb import set_trace
 sys.path.extend(['.','..'])
 from controller.svr_controller import *
+from view.console import *
 from model.dmflags import *
 from pkg_resources import resource_filename
 import os
@@ -28,8 +29,8 @@ class AlienArenaApp(pygubu.TkApplication):
         return self.builder.get_object(obj,self.master)
     def _create_ui(self):
         self.controller = {}
+        self.console = {}
         self.current_svr_addr = None
-        self.svr_addrs = []
         self.builder = builder = pygubu.Builder()
         builder.add_from_file(resource_filename('view','aaserver.ui'))
         self.svr_dialog = self._getobj('dialog_open_server').toplevel
@@ -43,13 +44,12 @@ class AlienArenaApp(pygubu.TkApplication):
         builder.connect_callbacks(self)
         # following needed to get scroll to show up
         self._getobj('plyr_scframe')._clipper.config(width=380,height=150)
-        self.set_title('AA Server Control')
+#        self._getobj('console_scframe')._clipper.config(width=380,height=150)
+        self.set_title('AAEmpire')
         (self.ws,self.hs) = (self.master.winfo_screenwidth(),
                              self.master.winfo_screenheight())
         self._menu_dirty = False
         self.load_menu_from_rc()
-
-
 
 
     def load_menu_from_rc(self):
@@ -67,12 +67,7 @@ class AlienArenaApp(pygubu.TkApplication):
             if (not (addr and pwd)):
                 continue
             try:
-                self.controller[addr] = ServerController(self)
-                self.controller[addr]._set_server_and_connect(address,pwd)
-                self._getobj('menu_item_server').add_command(
-                    label=addr,
-                    command=self._set_server_from_menu(addr)
-                )
+                self._add_controller_and_console(addr,pwd)
             except Exception as e:
                 del self.controller[addr]
                 msgbox.showerror(parent=self.master,
@@ -97,6 +92,7 @@ class AlienArenaApp(pygubu.TkApplication):
                                                   pw = pw ),
                    file=rcf)
         rcf.close()
+        self._menu_dirty = False
 
     def _find_rcf(self):
         if self.rcf:
@@ -133,19 +129,17 @@ class AlienArenaApp(pygubu.TkApplication):
             addr = self._getvar('open_svr_addr').get()
             if not addr:
                 raise RuntimeError('No address specified')
+            if (self.current_svr_addr in self.console):
+                self.console[self.current_svr_addr].save()
             self.current_svr_addr = addr
-            if addr not in self.svr_addrs:
-                self.svr_addrs.append(addr)
-                self._menu_dirty=True
-                self._getobj('menu_item_server').add_command(label=addr,command=self._set_server_from_menu(addr))
-            self.controller[addr] = ServerController(self)
-            self.controller[addr].set_server_from_dialog()
-            self._construct_player_table()
-            self._update_current_map()
+            self._add_controller_and_console(addr,'',from_dlg=1)
+            self._update_view()
             self.svr_dialog.withdraw()
+            self.set_title('AAEmpire - '+self.controller[addr].name)
         except Exception as e:
             msgbox.showerror(parent=self.svr_dialog,
                              title="Connection", message=e)
+            self.set_title('AAEmpire')
 
     def on_send_cmd_click(self):
         addr = self.current_svr_addr
@@ -154,6 +148,7 @@ class AlienArenaApp(pygubu.TkApplication):
                              title="No connection", message="No server connected")
         else:
             pass
+
     def on_start_map_click(self):
         addr = self.current_svr_addr
         if not addr:
@@ -206,6 +201,26 @@ class AlienArenaApp(pygubu.TkApplication):
                 self.controller[addr].set_dmflags(DMFlags(self._getvar('dmf_value').get()))
                 self.dmf_dialog.withdraw()
 
+    def _add_controller_and_console(self,addr,pwd,from_dlg=0):
+        if addr not in self.controller:
+            self.controller[addr] = ServerController(self)
+            self.console[addr] = Console(self._getobj('console_entry'),
+                                         self.controller[addr])
+            if from_dlg:
+                self.controller[addr].set_server_from_dialog()
+            else:
+                self.controller[addr]._set_server_and_connect(addr,pwd)
+            self._menu_dirty=True
+            self._getobj('menu_item_server').add_command(
+                label=addr,
+                command=self._set_server_from_menu(addr))
+
+
+    def _update_view(self):
+        self._update_current_map()
+        self._construct_player_table()
+        self._update_console()
+
     def _construct_player_table(self):
         addr = self.current_svr_addr
         if not addr:
@@ -235,6 +250,12 @@ class AlienArenaApp(pygubu.TkApplication):
             return
         current_map = self.controller[addr].get_current_map()
         self._getvar('current_map').set(current_map)
+
+    def _update_console(self):
+        addr = self.current_svr_addr
+        if not addr:
+            return
+        self.console[addr].restore()
 
     def _update_dmflags_boxes(self,dmf):
         for f in dmf_vars:
@@ -267,11 +288,13 @@ class AlienArenaApp(pygubu.TkApplication):
         def set_svr():
             nonlocal addr
             nonlocal self
+            if (self.current_svr_addr in self.console):
+                self.console[self.current_svr_addr].save()
             self.current_svr_addr=addr
             self.controller[addr]._update_server_info()
-            self._construct_player_table()
-            self._update_current_map()
-        return set_svr   
+            self.set_title('AAEmpire - '+self.controller[addr].name)
+            self._update_view()
+        return set_svr
         
 
 def _get_geometry(tl_obj):

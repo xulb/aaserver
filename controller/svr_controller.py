@@ -31,11 +31,11 @@ class ServerController:
         return self.app.builder.get_variable(var)
     def _getobj(self,obj):
         return self.app.builder.get_object(obj,self.app.master)
-    def _set_server_and_connect(self, address, passwd):
-        self.address = address
+    def _set_server_and_connect(self, addr, passwd):
+        self.address = tuple(addr.split(':'))
         self.passwd = passwd
         if passwd!='mock':
-            self.server = AAServer(address, passwd)
+            self.server = AAServer(self.address, self.passwd)
         else :
             self.server = mockServer
         self.name = self.server.name
@@ -43,8 +43,7 @@ class ServerController:
         self.maplist = " ".join(self.server.maplist)
 
     def set_server_from_dialog(self):
-        addr = tuple(
-            self._getvar('open_svr_addr').get().split(':'))
+        addr = self._getvar('open_svr_addr').get()
         passwd =self._getvar('open_svr_pass').get()
         passwd = passwd.strip()
         self._set_server_and_connect(addr,passwd)
