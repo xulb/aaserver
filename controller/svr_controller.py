@@ -77,6 +77,11 @@ class ServerController:
     def kick_player(self,plyr):
         self.server.kick(plyr)
         
+    def send_cmd(self,cmd):
+        """
+        Send an rcon cmd and return the server response.
+        """
+        return self.server.do_rcon_cmd(cmd)
 
 #msg_servername
 #msg_svraddr
