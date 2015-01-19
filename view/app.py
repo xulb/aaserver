@@ -141,14 +141,6 @@ class AlienArenaApp(pygubu.TkApplication):
                              title="Connection", message=e)
             self.set_title('AAEmpire')
 
-    def on_send_cmd_click(self):
-        addr = self.current_svr_addr
-        if not addr:
-            msgbox.showerror(parent=self.mainwindow,
-                             title="No connection", message="No server connected")
-        else:
-            pass
-
     def on_start_map_click(self):
         addr = self.current_svr_addr
         if not addr:
