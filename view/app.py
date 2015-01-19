@@ -75,6 +75,7 @@ class AlienArenaApp(pygubu.TkApplication):
                                  message="For {addr}: \n{msg}".format(addr=addr,msg=e))
                 self._menu_dirty = True
 
+
     def save_menu_to_rc(self):
         rcf = self._find_rcf()
         if not rcf:
@@ -196,8 +197,8 @@ class AlienArenaApp(pygubu.TkApplication):
     def _add_controller_and_console(self,addr,pwd,from_dlg=0):
         if addr not in self.controller:
             self.controller[addr] = ServerController(self)
-            self.console[addr] = Console(self._getobj('console_entry'),
-                                         self.controller[addr])
+            self.console[addr] = Console(self._getobj('console_tab_frame'),
+                controller=self.controller[addr])
             if from_dlg:
                 self.controller[addr].set_server_from_dialog()
             else:
@@ -247,7 +248,12 @@ class AlienArenaApp(pygubu.TkApplication):
         addr = self.current_svr_addr
         if not addr:
             return
-        self.console[addr].restore()
+        con = self.console[addr]
+        con_frame = self._getobj('console_tab_frame')
+        for c in con_frame.winfo_children():
+            c.grid_remove()
+        con.tw.grid()
+        
 
     def _update_dmflags_boxes(self,dmf):
         for f in dmf_vars:

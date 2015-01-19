@@ -300,21 +300,11 @@
               <property name="row">0</property>
             </layout>
             <child>
-              <object class="tk.Text" id="console_entry">
-                <property name="autoseparators">false</property>
-                <property name="blockcursor">true</property>
-                <property name="exportselection">true</property>
-                <property name="font">TkFixedFont</property>
-                <property name="foreground">#0000eb</property>
-                <property name="height">10</property>
-                <property name="maxundo">10</property>
-                <property name="undo">true</property>
-                <property name="width">50</property>
-                <property name="wrap">word</property>
+              <object class="ttk.Frame" id="marker_frame">
+                <property name="height">1</property>
+                <property name="width">1</property>
                 <layout>
                   <property name="column">0</property>
-                  <property name="padx">5</property>
-                  <property name="pady">5</property>
                   <property name="propagate">True</property>
                   <property name="row">1</property>
                 </layout>
