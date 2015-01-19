@@ -1,18 +1,23 @@
 import tkinter as tk
-
+from pdb import set_trace
 class Console():
-    promptstr = '>'
+    """
+    Make a tk.Text widget behave like a command console.
+    """
+    promptstr = '> '
     def __init__(self, textwidget, controller=None):
         self.tw = textwidget
         self.controller = controller
-        self.tw.event_add('<<Submit>>','Return','KeyRelease-Return')
+        self.tw.event_add('<<Submit>>','<KeyPress-Return>')
         self.tw.bind('<<Submit>>',self.submit)
+#        self.tw.bind('<Escape>',lambda event: set_trace())
+        self._hack_events()
         self._oldtext=''
         self.clear()
 
     def clear(self):
         self.tw.delete('1.0',tk.END)
-        self.display_prompt()
+        self.display_prompt(noret=1)
         
     def submit(self,event):
         cmd = self.get_command()
@@ -20,25 +25,31 @@ class Console():
             resp = self.do_request(cmd)
             self.display_response(resp=resp)
         self.display_prompt()
+        return "break"
 
     def get_command(self):
-        return self.tw.get("PROMPT",tk.END)
+        cmd = self.tw.get('PROMPT',tk.END)
+        return cmd
 
     def do_request(self,cmd):
         resp=''
         if self.controller:
-            pass
+            resp = self.controller.send_cmd(cmd)
         return resp
 
-    def display_prompt(self):
-        self.tw.insert(tk.END,"\n%s" % self.promptstr)
-        self.tw.mark_set("PROMPT",tk.END)
-        self.tw.mark_gravity("PROMPT",tk.RIGHT)
+    def display_prompt(self,noret=0):
+        prompt = self.promptstr;
+        prompt = prompt if noret else "\n"+prompt
+        self.tw.insert(tk.END,prompt)
+        # self.prindex = self.tw.index(tk.INSERT)
+        self.tw.mark_set(tk.INSERT,tk.END)
+        self.tw.mark_set('PROMPT',tk.INSERT)
+        self.tw.mark_gravity('PROMPT',tk.LEFT)
+        self.tw.see('PROMPT')
 
     def display_response(self,resp=''):
         if resp:
-            self.tw.insert("\n"+resp)
-        self.display_prompt()
+            self.tw.insert(tk.END,"\n"+resp)
     
     def save(self):
         self._oldtext = self.tw.get('1.0',tk.END)
@@ -47,8 +58,51 @@ class Console():
         if not self._oldtext:
             return
         else:
-            self.tw.delete('1.0',tk.END)
+            self.tw.delete('0.0',tk.END)
             self.tw.insert(tk.END,self._oldtext)
             self.tw.edit_reset()
             self._oldtext=''
             self.display_prompt()
+
+    def _hack_events(self):
+        tw = self.tw
+        def prevchar():
+            ins = list( map( int, tw.index(tk.INSERT).split('.') ) )
+            if ins[1] == 0:
+                ins[0] = ins[0]-1 if ins[0] > 1 else ins[0]
+                ins[1] = 100
+            else:
+                ins[1] = ins[1]-1
+            return "%d.%d" % (ins[0],ins[1])
+        def prevline():
+            ins = list( map( int, tw.index(tk.INSERT).split('.') ) )
+            ins[0] = ins[0]-1 if ins[0] > 0 else ins[0]
+            return "%d.%d" % (ins[0],ins[1])
+        def prevword():
+            idx = tw.search('\m.',tk.INSERT,backwards=True,regexp=True)
+            print(idx)
+            return idx
+        def linestart(e):
+            tw.mark_set('insert','PROMPT')
+            return 'break'
+
+        for ev in ['<<PrevChar>>','<<PrevWord>>','<<PrevLine>>']:
+            tw.bind(ev, lambda e: 'break' if e.widget.compare(tk.INSERT,"<=",'PROMPT') else '')
+        tw.bind('<<PrevChar>>',
+                lambda e: 'break' if e.widget.compare(prevchar(),"<=",'PROMPT') else '')
+        tw.bind('<<PrevLine>>',
+                lambda e: 'break' if e.widget.compare(prevline(),"<=",'PROMPT') else '')
+        tw.bind('<<PrevWord>>',
+                lambda e: 'break' if e.widget.compare(prevword(),">", tk.INSERT) or e.widget.compare(prevword(),"<=",'PROMPT') else '')
+        tw.bind('<<LineStart>>', linestart)
+        tw.event_add('<<PrevWord>>','<Alt-Key-b>')
+        tw.event_add('<<NextWord>>','<Alt-Key-f>')
+
+
+
+
+# text widget events
+#('<<Undo>>', '<<Redo>>', '<<PrevWord>>', '<<NextWord>>', '<<Copy>>', '<<SelectAll>>', '<<NextPara>>', '<<NextLine>>', '<<SelectLineEnd>>', '<<LineStart>>', '<<Paste>>', '<<ContextMenu>>', '<<SelectNextWord>>', '<<NextChar>>', '<<Submit>>', '<<SelectPrevLine>>', '<<SelectLineStart>>', '<<ToggleSelection>>', '<<SelectNextPara>>', '<<PrevPara>>', '<<SelectPrevPara>>', '<<NextWindow>>', '<<SelectNextLine>>', '<<PrevWindow>>', '<<SelectNextChar>>', '<<SelectPrevChar>>', '<<Cut>>', '<<PrevLine>>', '<<LineEnd>>', '<<SelectPrevWord>>', '<<PasteSelection>>', '<<SelectNone>>', '<<PrevChar>>')
+
+                    
+
