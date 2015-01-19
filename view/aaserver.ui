@@ -129,17 +129,6 @@
                   </columns>
                 </layout>
                 <child>
-                  <object class="ttk.Entry" id="txt_rcon_cmd">
-                    <property name="textvariable">string:rcon_cmd</property>
-                    <layout>
-                      <property name="column">1</property>
-                      <property name="propagate">True</property>
-                      <property name="row">5</property>
-                      <property name="sticky">we</property>
-                    </layout>
-                  </object>
-                </child>
-                <child>
                   <object class="ttk.Button" id="btn_start_map">
                     <property name="command">on_start_map_click</property>
                     <property name="text" translatable="yes">Start map</property>
@@ -169,28 +158,6 @@
                       <property name="column">0</property>
                       <property name="propagate">True</property>
                       <property name="row">3</property>
-                      <property name="sticky">we</property>
-                    </layout>
-                  </object>
-                </child>
-                <child>
-                  <object class="ttk.Button" id="btn_send_cmd">
-                    <property name="command">on_send_cmd_click</property>
-                    <property name="text" translatable="yes">Send</property>
-                    <layout>
-                      <property name="column">2</property>
-                      <property name="propagate">True</property>
-                      <property name="row">5</property>
-                    </layout>
-                  </object>
-                </child>
-                <child>
-                  <object class="ttk.Label" id="lbl_cmd">
-                    <property name="text" translatable="yes">Command</property>
-                    <layout>
-                      <property name="column">0</property>
-                      <property name="propagate">True</property>
-                      <property name="row">5</property>
                       <property name="sticky">we</property>
                     </layout>
                   </object>
