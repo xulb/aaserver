@@ -354,6 +354,11 @@
                   <property name="weight">1</property>
                 </column>
               </columns>
+              <rows>
+                <row id="0">
+                  <property name="weight">1</property>
+                </row>
+              </rows>
             </layout>
             <child>
               <object class="ttk.Frame" id="marker_frame">

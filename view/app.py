@@ -43,6 +43,9 @@ class AlienArenaApp(pygubu.TkApplication):
         top = self.master.winfo_toplevel()
         top.rowconfigure(0,weight=1)
         top.columnconfigure(0,weight=1)
+        self._getobj('plyr_frame').columnconfigure(0,weight=1)
+        self._getobj('plyr_frame').columnconfigure(1,weight=1)
+
         self.plr_dialog.rowconfigure(0,weight=1)
         self.plr_dialog.columnconfigure(0,weight=1)
         self.mainmenu = menu = self._getobj('menu_main')
@@ -229,12 +232,12 @@ class AlienArenaApp(pygubu.TkApplication):
         lbls_name=[]
         lbls_addr=[]
         for pl in players:
-            lbls_name.append(tk.Label(pl_frame, width=16, height=2, text=pl.stripped_name,relief='ridge'))
-            lbls_addr.append(tk.Label(pl_frame, width=16, height=2,text=pl.address,relief='ridge'))
+            lbls_name.append(tk.Label(pl_frame, width=20, height=2, text=pl.stripped_name,relief='ridge'))
+            lbls_addr.append(tk.Label(pl_frame, width=20, height=2,text=pl.address,relief='ridge'))
         for (n,a,pl) in zip(lbls_name,lbls_addr,players):
-            n.grid(in_=pl_frame,column=0,sticky=tk.N+tk.S+tk.E+tk.W)
+            n.grid(in_=pl_frame,column=0,sticky=tk.N+tk.E+tk.W)
             ninfo= n.grid_info()
-            a.grid(row=ninfo['row'],column=1,sticky=tk.N+tk.S+tk.E+tk.W)
+            a.grid(row=ninfo['row'],column=1,sticky=tk.N+tk.W+tk.E)
             n.unbind('<ButtonRelease-1>')
             n.bind('<ButtonRelease-1>',self._show_player_detail_dlg(pl))
             a.unbind('<ButtonRelease-1>')
@@ -288,11 +291,12 @@ class AlienArenaApp(pygubu.TkApplication):
         def player_dlg(ev):
             nonlocal plyr
             nonlocal self
-#            self._update_player_detail_dlg(plyr)
-            self._getvar("msg_pd_player").set(plyr.stripped_name)
-            for item in ['host','port','ping','score']:
-                self._getvar("msg_pd_%s" % item).set(getattr(plyr,item,None))
-            self._getobj("btn_pd_kick").configure(command=self._kick_player(plyr))
+            self._update_player_detail_dlg(plyr)
+            # self._getvar("msg_pd_player").set(plyr.stripped_name)
+            # for item in ['host','port','ping','score']:
+            #     self._getvar("msg_pd_%s" % item).set(getattr(plyr,item,None))
+            # self._getobj("btn_pd_kick").configure(command=self._kick_player(plyr
+            #                                                            ))
             self.master.winfo_toplevel().update_idletasks()
 #            self.plr_dialog.transient(self.master.winfo_toplevel())
             self.plr_dialog.deiconify()
