@@ -35,16 +35,20 @@ class AlienArenaApp(pygubu.TkApplication):
         builder.add_from_file(resource_filename('view','aaserver.ui'))
         self.svr_dialog = self._getobj('dialog_open_server').toplevel
         self.dmf_dialog = self._getobj('dialog_dmflags').toplevel
+        self.plr_dialog = self._getobj('dialog_player_details').toplevel
         for f in dmf_vars:
             obj = f.replace('f_','chk_')
             self._getobj(obj).configure(command=self._update_dmflags_value)
         self.mainwindow = self._getobj('aaserver_nbk')
-        self.master.winfo_toplevel().resizable(width=False,height=False)
+        top = self.master.winfo_toplevel()
+        top.rowconfigure(0,weight=1)
+        top.columnconfigure(0,weight=1)
+        self.plr_dialog.rowconfigure(0,weight=1)
+        self.plr_dialog.columnconfigure(0,weight=1)
         self.mainmenu = menu = self._getobj('menu_main')
         builder.connect_callbacks(self)
         # following needed to get scroll to show up
-        self._getobj('plyr_scframe')._clipper.config(width=380,height=150)
-#        self._getobj('console_scframe')._clipper.config(width=380,height=150)
+ #       self._getobj('plyr_scframe')._clipper.config(width=400,height=150)
         self.set_title('AAEmpire')
         (self.ws,self.hs) = (self.master.winfo_screenwidth(),
                              self.master.winfo_screenheight())
@@ -175,11 +179,11 @@ class AlienArenaApp(pygubu.TkApplication):
         else:
             dmf = self.controller[addr].get_dmflags()
             self._update_dmflags_boxes(dmf)
+            self.master.winfo_toplevel().update_idletasks()
             (w,h,x,y) = _get_geometry(self.master)
             self.dmf_dialog.deiconify()
             self.dmf_dialog.wait_visibility(self.dmf_dialog)
             (wd,hd,xd,yd) = _get_geometry(self.dmf_dialog)
-            _set_geometry(self.dmf_dialog, wd, hd, x+24, y+24)
             _set_geometry(self.dmf_dialog, wd, hd, x+25, y+25)
 
     def on_dmflags_dlg_click(self):
@@ -224,16 +228,17 @@ class AlienArenaApp(pygubu.TkApplication):
             c.grid_forget()
         lbls_name=[]
         lbls_addr=[]
-        btns_kick=[]
         for pl in players:
             lbls_name.append(tk.Label(pl_frame, width=16, height=2, text=pl.stripped_name,relief='ridge'))
             lbls_addr.append(tk.Label(pl_frame, width=16, height=2,text=pl.address,relief='ridge'))
-            btns_kick.append(tk.Button(pl_frame, text='Kick', command=self._kick_player(pl)))
-        for (n,a,k) in zip(lbls_name,lbls_addr,btns_kick):
-            n.grid(in_=pl_frame,column=0)
+        for (n,a,pl) in zip(lbls_name,lbls_addr,players):
+            n.grid(in_=pl_frame,column=0,sticky=tk.N+tk.S+tk.E+tk.W)
             ninfo= n.grid_info()
-            a.grid(row=ninfo['row'],column=1)
-            k.grid(row=ninfo['row'],column=2)
+            a.grid(row=ninfo['row'],column=1,sticky=tk.N+tk.S+tk.E+tk.W)
+            n.unbind('<ButtonRelease-1>')
+            n.bind('<ButtonRelease-1>',self._show_player_detail_dlg(pl))
+            a.unbind('<ButtonRelease-1>')
+            a.bind('<ButtonRelease-1>',self._show_player_detail_dlg(pl))
         # necessary to get scrollbar to show and work:
         self._getobj('plyr_scframe').reposition() 
 
@@ -252,7 +257,7 @@ class AlienArenaApp(pygubu.TkApplication):
         con_frame = self._getobj('console_tab_frame')
         for c in con_frame.winfo_children():
             c.grid_remove()
-        con.tw.grid()
+        con.tw.grid(sticky=tk.N+tk.S+tk.E+tk.W)
         
 
     def _update_dmflags_boxes(self,dmf):
@@ -272,6 +277,31 @@ class AlienArenaApp(pygubu.TkApplication):
             if self._getvar(f).get() == dmf_vars[f]:
                 value += flag.value
         self._getvar('dmf_value').set(value)
+
+    def _update_player_detail_dlg(self,plyr):
+        self._getvar("msg_pd_player").set(plyr.stripped_name)
+        for item in ['host','port','ping','score']:
+            self._getvar("msg_pd_%s" % item).set(getattr(plyr,item,None))
+        self._getobj("btn_pd_kick").configure(command=self._kick_player(plyr))
+
+    def _show_player_detail_dlg(self,plyr):
+        def player_dlg(ev):
+            nonlocal plyr
+            nonlocal self
+#            self._update_player_detail_dlg(plyr)
+            self._getvar("msg_pd_player").set(plyr.stripped_name)
+            for item in ['host','port','ping','score']:
+                self._getvar("msg_pd_%s" % item).set(getattr(plyr,item,None))
+            self._getobj("btn_pd_kick").configure(command=self._kick_player(plyr))
+            self.master.winfo_toplevel().update_idletasks()
+#            self.plr_dialog.transient(self.master.winfo_toplevel())
+            self.plr_dialog.deiconify()
+            self.plr_dialog.wait_visibility(self.plr_dialog)
+            (wd,hd,xd,yd) = _get_geometry(self.plr_dialog)
+            (w,h,x,y) = _get_geometry(self.master)
+            _set_geometry(self.plr_dialog, wd, hd, x+25, y+25)
+        return player_dlg
+
 
     def _kick_player(self,plyr):
         def kick():
