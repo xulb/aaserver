@@ -918,6 +918,7 @@
   </object>
   <object class="pygubu.builder.widgets.dialog" id="dialog_player_details">
     <property name="height">200</property>
+    <property name="minsize">300|200</property>
     <property name="resizable">none</property>
     <property name="title" translatable="yes">Player Details</property>
     <property name="width">400</property>
@@ -970,6 +971,7 @@
         <child>
           <object class="ttk.Label" id="lbl_pd_player">
             <property name="text" translatable="yes">Player:</property>
+	    <property name="width">15</property>
             <layout>
               <property name="column">0</property>
               <property name="propagate">True</property>
@@ -1099,9 +1101,6 @@
             <column id="0">
               <property name="weight">1</property>
             </column>
-            <column id="1">
-              <property name="weight">1</property>
-            </column>
           </columns>
           <rows>
             <row id="0">
@@ -1112,16 +1111,6 @@
             </row>
           </rows>
         </layout>
-        <child>
-          <object class="ttk.Button" id="btn_pd_refresh">
-            <property name="text" translatable="yes">Refresh</property>
-            <layout>
-              <property name="column">1</property>
-              <property name="propagate">True</property>
-              <property name="row">0</property>
-            </layout>
-          </object>
-        </child>
         <child>
           <object class="ttk.Button" id="btn_pd_kick">
             <property name="text" translatable="yes">Kick</property>

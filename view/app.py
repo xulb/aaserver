@@ -292,13 +292,8 @@ class AlienArenaApp(pygubu.TkApplication):
             nonlocal plyr
             nonlocal self
             self._update_player_detail_dlg(plyr)
-            # self._getvar("msg_pd_player").set(plyr.stripped_name)
-            # for item in ['host','port','ping','score']:
-            #     self._getvar("msg_pd_%s" % item).set(getattr(plyr,item,None))
-            # self._getobj("btn_pd_kick").configure(command=self._kick_player(plyr
-            #                                                            ))
             self.master.winfo_toplevel().update_idletasks()
-#            self.plr_dialog.transient(self.master.winfo_toplevel())
+#           self.plr_dialog.transient(self.master.winfo_toplevel())
             self.plr_dialog.deiconify()
             self.plr_dialog.wait_visibility(self.plr_dialog)
             (wd,hd,xd,yd) = _get_geometry(self.plr_dialog)
