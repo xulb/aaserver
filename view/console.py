@@ -3,12 +3,14 @@ from tkinter.scrolledtext import ScrolledText
 from pdb import set_trace
 class Console():
     """
-    Make a tk.ScrollerText widget behave like a command console.
+    Make a tk.ScrolledText widget behave like a command console.
     """
     promptstr = '> '
     def __init__(self, parent, controller=None):
         self.tw = ScrolledText(parent, font='TkFixedFont',foreground='#0000eb',
                                height=10,width=50,undo=True,maxundo=15)
+        self.tw.rowconfigure(0,weight=1)
+        self.tw.columnconfigure(0,weight=1)
         self.controller = controller
         self.tw.event_add('<<Submit>>','<KeyPress-Return>')
         self.tw.bind('<<Submit>>',self.submit)
