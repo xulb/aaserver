@@ -11,6 +11,7 @@
     </layout>
     <child>
       <object class="ttk.Notebook.Tab" id="svr_tab">
+        <property name="padding">5 5 5 5 </property>
         <property name="sticky">nesw</property>
         <property name="text" translatable="yes">Server</property>
         <child>
@@ -19,9 +20,23 @@
             <property name="width">400</property>
             <layout>
               <property name="column">0</property>
+              <property name="ipadx">0</property>
               <property name="propagate">True</property>
               <property name="row">0</property>
               <property name="sticky">nesw</property>
+              <columns>
+                <column id="0">
+                  <property name="weight">1</property>
+                </column>
+              </columns>
+              <rows>
+                <row id="0">
+                  <property name="weight">1</property>
+                </row>
+                <row id="1">
+                  <property name="weight">1</property>
+                </row>
+              </rows>
             </layout>
             <child>
               <object class="ttk.Labelframe" id="svr_frame">
@@ -209,6 +224,7 @@
     </child>
     <child>
       <object class="ttk.Notebook.Tab" id="plyr_tab">
+        <property name="padding">5 5 5 5</property>
         <property name="sticky">nesw</property>
         <property name="text" translatable="yes">Players</property>
         <child>
@@ -220,6 +236,11 @@
               <property name="propagate">True</property>
               <property name="row">0</property>
               <property name="sticky">nesw</property>
+              <columns>
+                <column id="0">
+                  <property name="weight">1</property>
+                </column>
+              </columns>
             </layout>
             <child>
               <object class="ttk.Frame" id="plyr_control_frame">
@@ -254,17 +275,36 @@
                   <property name="propagate">True</property>
                   <property name="row">1</property>
                   <property name="sticky">nesw</property>
+                  <columns>
+                    <column id="0">
+                      <property name="weight">1</property>
+                    </column>
+                  </columns>
+                  <rows>
+                    <row id="0">
+                      <property name="weight">1</property>
+                    </row>
+                  </rows>
                 </layout>
                 <child>
                   <object class="pygubu.builder.widgets.scrolledframe" id="plyr_scframe">
-                    <property name="height">150</property>
-                    <property name="scrolltype">vertical</property>
-                    <property name="width">400</property>
+                    <property name="padding">2 2 2 2</property>
+                    <property name="scrolltype">both</property>
                     <layout>
                       <property name="column">0</property>
                       <property name="propagate">True</property>
                       <property name="row">0</property>
-                      <property name="sticky">we</property>
+                      <property name="sticky">nswe</property>
+                      <columns>
+                        <column id="0">
+                          <property name="weight">1</property>
+                        </column>
+                      </columns>
+                      <rows>
+                        <row id="0">
+                          <property name="weight">1</property>
+                        </row>
+                      </rows>
                     </layout>
                     <child>
                       <object class="ttk.Frame" id="plyr_frame">
@@ -275,6 +315,16 @@
                           <property name="propagate">True</property>
                           <property name="row">0</property>
                           <property name="sticky">nesw</property>
+                          <columns>
+                            <column id="0">
+                              <property name="weight">1</property>
+                            </column>
+                          </columns>
+                          <rows>
+                            <row id="0">
+                              <property name="weight">1</property>
+                            </row>
+                          </rows>
                         </layout>
                       </object>
                     </child>
@@ -288,16 +338,22 @@
     </child>
     <child>
       <object class="ttk.Notebook.Tab" id="console_tab">
+        <property name="padding">5 5 5 5</property>
+        <property name="sticky">nswe</property>
         <property name="text" translatable="yes">Console</property>
         <child>
           <object class="ttk.Frame" id="console_tab_frame">
-            <property name="height">200</property>
             <property name="relief">flat</property>
-            <property name="width">400</property>
             <layout>
               <property name="column">0</property>
               <property name="propagate">True</property>
               <property name="row">0</property>
+              <property name="sticky">nswe</property>
+              <columns>
+                <column id="0">
+                  <property name="weight">1</property>
+                </column>
+              </columns>
             </layout>
             <child>
               <object class="ttk.Frame" id="marker_frame">
@@ -415,6 +471,7 @@
   <object class="pygubu.builder.widgets.dialog" id="dialog_dmflags">
     <property name="height">100</property>
     <property name="modal">false</property>
+    <property name="resizable">none</property>
     <property name="title" translatable="yes">DMFlags</property>
     <property name="width">300</property>
     <child>
@@ -848,6 +905,225 @@
               <property name="propagate">True</property>
               <property name="row">0</property>
               <property name="sticky">e</property>
+            </layout>
+          </object>
+        </child>
+      </object>
+    </child>
+  </object>
+  <object class="pygubu.builder.widgets.dialog" id="dialog_player_details">
+    <property name="height">200</property>
+    <property name="resizable">none</property>
+    <property name="title" translatable="yes">Player Details</property>
+    <property name="width">400</property>
+    <child>
+      <object class="ttk.Frame" id="player_detail_frame">
+        <property name="height">200</property>
+        <property name="padding">5 5 5 5</property>
+        <property name="width">400</property>
+        <layout>
+          <property name="column">0</property>
+          <property name="propagate">True</property>
+          <property name="row">0</property>
+          <property name="sticky">nswe</property>
+          <columns>
+            <column id="0">
+              <property name="weight">1</property>
+            </column>
+            <column id="1">
+              <property name="minsize">70</property>
+              <property name="weight">1</property>
+            </column>
+          </columns>
+          <rows>
+            <row id="0">
+              <property name="weight">1</property>
+            </row>
+            <row id="1">
+              <property name="weight">1</property>
+            </row>
+            <row id="2">
+              <property name="weight">1</property>
+            </row>
+            <row id="3">
+              <property name="weight">1</property>
+            </row>
+            <row id="4">
+              <property name="weight">1</property>
+            </row>
+            <row id="5">
+              <property name="weight">1</property>
+            </row>
+            <row id="6">
+              <property name="weight">1</property>
+            </row>
+            <row id="7">
+              <property name="weight">1</property>
+            </row>
+          </rows>
+        </layout>
+        <child>
+          <object class="ttk.Label" id="lbl_pd_player">
+            <property name="text" translatable="yes">Player:</property>
+            <layout>
+              <property name="column">0</property>
+              <property name="propagate">True</property>
+              <property name="row">0</property>
+              <property name="sticky">nswe</property>
+            </layout>
+          </object>
+        </child>
+        <child>
+          <object class="tk.Message" id="msg_pd_player">
+            <property name="text" translatable="yes">texttextext</property>
+            <property name="textvariable">string:msg_pd_player</property>
+            <property name="width">100</property>
+            <layout>
+              <property name="column">1</property>
+              <property name="propagate">True</property>
+              <property name="row">0</property>
+              <property name="sticky">nswe</property>
+            </layout>
+          </object>
+        </child>
+        <child>
+          <object class="ttk.Label" id="lbl_pd_host">
+            <property name="text" translatable="yes">Host:	</property>
+            <layout>
+              <property name="column">0</property>
+              <property name="propagate">True</property>
+              <property name="row">1</property>
+              <property name="sticky">nswe</property>
+            </layout>
+          </object>
+        </child>
+        <child>
+          <object class="tk.Message" id="msg_pd_host">
+            <property name="textvariable">string:msg_pd_host</property>
+            <property name="width">100</property>
+            <layout>
+              <property name="column">1</property>
+              <property name="propagate">True</property>
+              <property name="row">1</property>
+              <property name="sticky">nswe</property>
+            </layout>
+          </object>
+        </child>
+        <child>
+          <object class="ttk.Label" id="lbl_pd_port">
+            <property name="text" translatable="yes">Port:</property>
+            <layout>
+              <property name="column">0</property>
+              <property name="propagate">True</property>
+              <property name="row">2</property>
+              <property name="sticky">nswe</property>
+            </layout>
+          </object>
+        </child>
+        <child>
+          <object class="tk.Message" id="msg_pd_port">
+            <property name="textvariable">int:msg_pd_port</property>
+            <property name="width">100</property>
+            <layout>
+              <property name="column">1</property>
+              <property name="propagate">True</property>
+              <property name="row">2</property>
+              <property name="sticky">nswe</property>
+            </layout>
+          </object>
+        </child>
+        <child>
+          <object class="ttk.Label" id="lbl_pd_ping">
+            <property name="text" translatable="yes">Ping:</property>
+            <layout>
+              <property name="column">0</property>
+              <property name="propagate">True</property>
+              <property name="row">3</property>
+              <property name="sticky">nswe</property>
+            </layout>
+          </object>
+        </child>
+        <child>
+          <object class="tk.Message" id="msg_pd_ping">
+            <property name="textvariable">int:msg_pd_ping</property>
+            <property name="width">100</property>
+            <layout>
+              <property name="column">1</property>
+              <property name="propagate">True</property>
+              <property name="row">3</property>
+              <property name="sticky">nswe</property>
+            </layout>
+          </object>
+        </child>
+        <child>
+          <object class="ttk.Label" id="lbl_pd_score">
+            <property name="text" translatable="yes">Score:</property>
+            <layout>
+              <property name="column">0</property>
+              <property name="propagate">True</property>
+              <property name="row">4</property>
+              <property name="sticky">nswe</property>
+            </layout>
+          </object>
+        </child>
+        <child>
+          <object class="tk.Message" id="msg_pd_score">
+            <property name="textvariable">int:msg_pd_score</property>
+            <property name="width">100</property>
+            <layout>
+              <property name="column">1</property>
+              <property name="propagate">True</property>
+              <property name="row">4</property>
+              <property name="sticky">nswe</property>
+            </layout>
+          </object>
+        </child>
+      </object>
+    </child>
+    <child>
+      <object class="ttk.Frame" id="player_ctl_frame">
+        <property name="height">200</property>
+        <property name="padding">5 5 5 5</property>
+        <property name="width">400</property>
+        <layout>
+          <property name="column">0</property>
+          <property name="propagate">True</property>
+          <property name="row">1</property>
+          <property name="sticky">nswe</property>
+          <columns>
+            <column id="0">
+              <property name="weight">1</property>
+            </column>
+            <column id="1">
+              <property name="weight">1</property>
+            </column>
+          </columns>
+          <rows>
+            <row id="0">
+              <property name="weight">1</property>
+            </row>
+            <row id="1">
+              <property name="weight">0</property>
+            </row>
+          </rows>
+        </layout>
+        <child>
+          <object class="ttk.Button" id="btn_pd_refresh">
+            <property name="text" translatable="yes">Refresh</property>
+            <layout>
+              <property name="column">1</property>
+              <property name="propagate">True</property>
+              <property name="row">0</property>
+            </layout>
+          </object>
+        </child>
+        <child>
+          <object class="ttk.Button" id="btn_pd_kick">
+            <property name="text" translatable="yes">Kick</property>
+            <layout>
+              <property name="column">0</property>
+              <property name="propagate">True</property>
+              <property name="row">0</property>
             </layout>
           </object>
         </child>
