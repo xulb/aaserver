@@ -33,7 +33,7 @@ setup(
     name = "aaempire",
     version = "0.1",
     packages = find_packages(),
-    scripts = ["aaempire.py"],
+    scripts = ["aaempire"],
     install_requires = ["pygubu>=0.9.7"],
     package_data = {
         '':["*.ui"]
