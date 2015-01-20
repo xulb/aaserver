@@ -77,8 +77,9 @@ class AAServer(rcon.RconClientProtocol):
             if m:
                 continue
             if hdr: # now on a player status line
-                d = dict(zip(hdr,l.split()))
-                player = Player(d['name'],d['address'])
+#                d = dict(zip(hdr,l.split()))
+#                player = Player(d['name'],d['address'])
+                player = Player(l)
                 self.current_players.append(player)
                 continue
 
@@ -101,11 +102,26 @@ class AAServer(rcon.RconClientProtocol):
         self.cvar('dmflags', dmf.value)
 
 class Player:
-    def __init__(self, name, address):
-        self.name = name
-        self.stripped_name = q2strip(name)
-        self.address = address
-                
+    def __init__(self, name_or_status_line, address=None):
+        if address:
+            self.name = name_or_status_line
+            self.stripped_name = q2strip(self.name)
+            self.address = address
+        else:
+            line = name_or_status_line
+            items = line.split()
+            props = dict( zip( ['num','score','ping','name',
+                                'lastmsg','address','qport'],
+                               items ) )
+            self.name = props['name']
+            self.stripped_name = q2strip(props['name'])
+            self.address = props['address']
+            addr = props['address'].split(':')
+            self.host = addr[0]
+            self.port = addr[1]
+            self.ping = props['ping']
+            self.score = props['score']
+            self.qport = props['qport']
         
 def q2strip(s):
     """
