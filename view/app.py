@@ -89,7 +89,7 @@ class AlienArenaApp(pygubu.TkApplication):
             global rc_paths
             for dir in rc_paths:
                 if os.path.exists(dir):
-                    rcf = os.path.join(dir,".aaempirerc")
+                    rcf = os.path.normpath(os.path.join(dir,".aaempirerc"))
                     break
         rcf = open(rcf, "w")
         for s in self.controller:
