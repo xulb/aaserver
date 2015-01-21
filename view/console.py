@@ -89,6 +89,10 @@ class Console():
         def linestart(e):
             tw.mark_set('insert','PROMPT')
             return 'break'
+        def cursor_protect(e):
+            if (e.widget.compare(tk.INSERT,"<=",'PROMPT')):
+                e.widget.mark_set(tk.INSERT,tk.END)
+            
 
         for ev in ['<<PrevChar>>','<<PrevWord>>','<<PrevLine>>']:
             tw.bind(ev, lambda e: 'break' if e.widget.compare(tk.INSERT,"<=",'PROMPT') else '')
@@ -98,7 +102,9 @@ class Console():
                 lambda e: 'break' if e.widget.compare(prevline(),"<=",'PROMPT') else '')
         tw.bind('<<PrevWord>>',
                 lambda e: 'break' if e.widget.compare(prevword(),">", tk.INSERT) or e.widget.compare(prevword(),"<=",'PROMPT') else '')
+        tw.bind('<BackSpace>', lambda e: 'break' if e.widget.compare(tk.INSERT,"<=",'PROMPT') else '')
         tw.bind('<<LineStart>>', linestart)
+        tw.bind('<ButtonRelease-1>',cursor_protect)
         tw.event_add('<<PrevWord>>','<Alt-Key-b>')
         tw.event_add('<<NextWord>>','<Alt-Key-f>')
 
