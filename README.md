@@ -28,4 +28,4 @@ The *Players* tab shows who's currently playing. Click the name to get further d
 
 Kick with a click:
 
-![kick-xulb-before](doc/kick-xulb-before.png) ![kick xulb after](doc/kick-xulb-after.png)
+![kick-xulb-before](doc/kick-xulb-before.png =250x) ![kick xulb after](doc/kick-xulb-after.png =250x)
