@@ -7,6 +7,15 @@ Includes AAEmpire, a little GUI to manage your running servers.
 aaempire
 ========
 
+Installation
+============
+
+
+
+Walkthrough
+===========
+
+
 ![main window](doc/mainwindow.png)
 
 Connect to a server using the *Connect* menu. Multiple servers can be entered and saved for future sessions.
@@ -29,3 +38,10 @@ The *Players* tab shows who's currently playing. Click the name to get further d
 Kick with a click:
 
 ![kick xulb before](doc/kick-xulb-before.png) ![kick xulb after](doc/kick-xulb-after.png)
+
+Finally, the *Console* tab is a direct rcon console to your server; use it like a command line.
+
+![console](doc/console.png)
+
+GLHF-
+Xulb
