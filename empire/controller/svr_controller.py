@@ -1,5 +1,5 @@
-from model.aaserver import *
-from model.dmflags import *
+from empire.model.aaserver import *
+from empire.model.dmflags import *
 from unittest.mock import Mock
 
 mockServer = Mock(spec=AAServer)

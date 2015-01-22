@@ -1,9 +1,9 @@
 import sys
 from pdb import set_trace
 sys.path.extend(['.','..'])
-from controller.svr_controller import *
-from view.console import *
-from model.dmflags import *
+from empire.controller.svr_controller import *
+from empire.view.console import *
+from empire.model.dmflags import *
 from pkg_resources import resource_filename
 import os
 import os.path
@@ -32,7 +32,7 @@ class AlienArenaApp(pygubu.TkApplication):
         self.console = {}
         self.current_svr_addr = None
         self.builder = builder = pygubu.Builder()
-        builder.add_from_file(resource_filename('view','aaserver.ui'))
+        builder.add_from_file(resource_filename('empire.view','aaserver.ui'))
         self.svr_dialog = self._getobj('dialog_open_server').toplevel
         self.dmf_dialog = self._getobj('dialog_dmflags').toplevel
         self.plr_dialog = self._getobj('dialog_player_details').toplevel

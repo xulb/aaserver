@@ -1,5 +1,5 @@
-import model.rcon as rcon
-from model.dmflags import *
+import empire.model.rcon as rcon
+from empire.model.dmflags import *
 import asyncio
 import re
 import sys
