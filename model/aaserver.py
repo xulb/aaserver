@@ -11,7 +11,7 @@ class AAServer(rcon.RconClientProtocol):
         try:
             self.connect()
         except Exception as e:
-            raise RuntimeError("Problem connecting : %s" % e)
+            raise RuntimeError("Problem connecting : %s" % e.message)
 
     @property
     def maplist(self):

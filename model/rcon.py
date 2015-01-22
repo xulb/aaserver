@@ -46,7 +46,7 @@ class RconClientProtocol(asyncio.Protocol):
     """asyncio Protocol object for UDP communication with QuakeII server
     """
     WAIT = 0.100
-    TIMEOUT = 15
+    TIMEOUT = 5
     def __init__(self, loop, address, passwd,log=None):
         self.loop = loop
         self.address = address
