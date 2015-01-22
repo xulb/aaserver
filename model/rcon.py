@@ -125,11 +125,13 @@ class RconClientProtocol(asyncio.Protocol):
         self.data.appendleft(data);
 
     def error_received(self, exc):
-        raise RuntimeError("UDP error : "+exc)
+        t = re.search("\'(.*)\'>",str(type(exc))).group(1)
+        raise RuntimeError("UDP error : "+getattr(exc,'message',t))
 
     def connection_lost(self, exc):
         self.loop.stop()
-        raise RuntimeError("Socket closed ["+exc+"]")
+        t = re.search("\'(.*)\'>",str(type(exc))).group(1)
+        raise RuntimeError("Socket closed ["+getattr(exc,'message',t)+"]")
 
     def finish(self):
         self.transport.close()
