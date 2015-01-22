@@ -18,8 +18,8 @@ $ sudo apt-get install python3.4
 
 Download the distribution:
 
-* [WinDoze .zip](dist/aaempire-0.1.zip)
-* ['Nix .tar.gz](dist/aaempire-0.1.tar.gz)
+* [WinDoze .zip](raw/master/dist/aaempire-0.1.tar.gz)
+* ['Nix .tar.gz](raw/master/dist/aaempire-0.1.zip)
 
 Expand and install:
 
