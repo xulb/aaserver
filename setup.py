@@ -1,3 +1,5 @@
+import ez_setup
+ez_setup.use_setuptools()
 import sys
 import os.path
 from setuptools import setup, find_packages
