@@ -1,5 +1,5 @@
-import ez_setup
-ez_setup.use_setuptools()
+import ez.ez_setup
+ez.ez_setup.use_setuptools()
 import sys
 import os.path
 from setuptools import setup, find_packages
@@ -34,11 +34,11 @@ class testArgs:
 setup(
     name = "aaempire",
     version = "0.1",
-    packages = ["empire","empire.view","empire.controller","empire.model"],
+    packages = ["ez","empire","empire.view","empire.controller","empire.model"],
     scripts = ["aaempire"],
     install_requires = ["pygubu>=0.9.7"],
     package_data = {
-        '':["*.ui"]
+        'empire.view':["*.ui"],
     },
     test_suite="tests",
     author = "Xulb Alien",
